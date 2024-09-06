@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.okccc</groupId>
+    <artifactId>eshop-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- 父工程不打包,只做依赖管理及子模块的聚合和继承 -->
+    <packaging>pom</packaging>
+    <modules>
+        <module>common</module>
+        <module>model</module>
+        <module>log</module>
+        <module>web-admin</module>
+        <module>web-manager</module>
+        <module>service-gateway</module>
+        <module>service</module>
+    </modules>
+
+    <!-- 所有SpringBoot项目都继承该父项目,这里管理了大部分常用依赖的版本 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- Spring Boot [3.2.0] is not compatible with this Spring Cloud release train -->
+        <!-- Change Spring Boot version to one of the following versions [3.0.x, 3.1.x] -->
+        <version>3.0.9</version>
+    </parent>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- spring-boot-starter-parent不包含的依赖需手动引入 -->
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <easycaptcha.version>1.6.2</easycaptcha.version>
+        <jwt.version>0.12.6</jwt.version>
+        <minio.version>8.5.2</minio.version>
+        <aliyun.sms.version>3.0.0</aliyun.sms.version>
+        <!-- 可选 -->
+        <mybatis.version>3.0.3</mybatis.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
+        <hutool.version>5.8.25</hutool.version>
+        <fastjson2.version>2.0.52</fastjson2.version>
+        <!-- spring-cloud部分 -->
+        <spring.cloud.version>2022.0.2</spring.cloud.version>
+        <spring.cloud.alibaba.version>2022.0.0.0</spring.cloud.alibaba.version>
+        <alipay.version>4.38.200.ALL</alipay.version>
+    </properties>
+
+    <!-- 父工程统一管理依赖版本,只声明不引入,这里报红可以忽略,等子模块引入依赖后就正常了 -->
+    <!-- 查看idea左侧External Libraries发现当前只有jdk依赖,等子模块引入依赖时才会出现 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- mybatis-plus,官方文档：https://baomidou.com/getting-started/ -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- knife4,官方文档：https://doc.xiaominfo.com/docs/quick-start -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- 图形验证码,官方文档：https://gitee.com/ele-admin/EasyCaptcha -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easycaptcha.version}</version>
+            </dependency>
+
+            <!-- jjwt(java-jwt)登录认证,官方文档：https://github.com/jwtk/jjwt#install-jdk-maven -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <scope>runtime</scope>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <scope>runtime</scope>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- minio对象存储,官方文档：https://min.io/docs/minio/linux/developers/minio-drivers.html?ref=docs#java-sdk -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
+            <!-- 阿里云短信客户端,官方文档：https://help.aliyun.com/document_detail/215759.html?spm=a2c4g.215759.0.0.49f32807f4Yc0y -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${aliyun.sms.version}</version>
+            </dependency>
+
+            <!-- mybatis启动器 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- hutool工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- fastjson2 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+
+            <!-- spring cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <!-- 导入pom文件,里面包含一堆cloud相关依赖 -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring cloud alibaba -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- alipay支付 -->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
