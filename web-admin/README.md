@@ -21,4 +21,10 @@
 # 配置pom.xml,引入相关依赖
 
 # 导入eshop.sql,创建项目中使用的所有表
+
+# model模块
+# 项目中涉及到的实体类有三种
+# 前端请求参数实体类：定义在dto包(Data Transfer Object)
+# 映射数据库表实体类：定义在entity包,通常和数据库表名一致
+# 后端响应结果实体类：定义在vo包(View Object)
 ```
