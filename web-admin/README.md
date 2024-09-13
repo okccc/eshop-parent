@@ -30,3 +30,9 @@
 # 实体类的公共字段id,create_time,update_time,is_deleted可以抽取到基类统一管理,其它实体类继承该基类
 # 实体类的状态字段status和类型字段type全部使用枚举类型,方便维护代码
 ```
+
+## 后台管理系统 - 前端工程搭建
+```shell
+# 1.安装nodejs,推荐16及以上版本,node.js是运行前端程序的服务器,node -v查看版本,类似java的tomcat
+https://nodejs.org/download/release/v16.16.0/
+```
