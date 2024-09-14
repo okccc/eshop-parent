@@ -35,4 +35,10 @@
 ```shell
 # 1.安装nodejs,推荐16及以上版本,node.js是运行前端程序的服务器,node -v查看版本,类似java的tomcat
 https://nodejs.org/download/release/v16.16.0/
+
+# 2.npm(Node Package Manager)是node.js的包管理工具,npm -v查看版本,类似java的maven
+# 配置阿里镜像
+npm config set registry https://registry.npmjs.org/
+# 更新npm版本
+npm install -g npm@9.6.6
 ```
