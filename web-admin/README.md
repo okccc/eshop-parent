@@ -41,4 +41,15 @@ https://nodejs.org/download/release/v16.16.0/
 npm config set registry https://registry.npmjs.org/
 # 更新npm版本
 npm install -g npm@9.6.6
+
+# 3.安装vscode
+# 创建工作区：先创建空文件夹web-admin - 使用vscode打开 - 文件 - 将工作区另存为 - 保存
+# 下载项目
+git clone https://github.com/huzhushan/vue3-element-admin.git
+# 进入项目目录
+cd vue3-element-admin
+# 安装项目依赖
+npm install --registry=https://registry.npm.taobao.org
+# 启动服务,打开页面
+npm start
 ```
