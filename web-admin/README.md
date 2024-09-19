@@ -29,6 +29,12 @@
 # 后端响应结果实体类：定义在vo包(View Object)
 # 实体类的公共字段id,create_time,update_time,is_deleted可以抽取到基类统一管理,其它实体类继承该基类
 # 实体类的状态字段status和类型字段type全部使用枚举类型,方便维护代码
+
+# 跨域请求：通过一个域的javascript脚本和另外一个域的内容进行交互
+# 同源(域)策略：是浏览器最核心也最基本的安全功能,会阻止跨域请求
+# 域信息：http://localhost:8080/ssm 协议、域名、端口号必须全部相同,有一个不同就会存在跨域问题
+# CORS(Cross-origin Resource Sharing)：是跨域的一种解决方案,服务器可以选择是否允许跨域请求访问到它们的资源
+# 后端服务器开启跨域支持：a.给每个Controller添加@CrossOrigin  b.在配置类添加跨域请求(推荐)
 ```
 
 ## 后台管理系统 - 前端工程搭建
