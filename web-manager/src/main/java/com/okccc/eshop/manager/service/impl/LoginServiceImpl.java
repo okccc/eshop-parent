@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    // 自动注入时可以点击左侧Navigate按钮查看组件来源
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
