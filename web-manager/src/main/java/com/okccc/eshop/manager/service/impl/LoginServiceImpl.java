@@ -30,7 +30,9 @@ public class LoginServiceImpl implements LoginService {
     public CaptchaVo getCaptcha() {
         // 1.使用hutool工具类生成图片验证码(速度比easy-captcha快)
         LineCaptcha captcha = CaptchaUtil.createLineCaptcha(130, 48, 4, 2);
+        // 获取验证码中的字符串
         String codeValue = captcha.getCode();
+        // 将图片验证码转换成base64编码的字符串
         String codeImage = "data:image/png;base64," + captcha.getImageBase64();
 
         // 2.将验证码字符串存入redis,有效期1分钟
