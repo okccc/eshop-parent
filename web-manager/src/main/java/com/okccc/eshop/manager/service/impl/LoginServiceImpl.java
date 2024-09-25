@@ -39,6 +39,8 @@ public class LoginServiceImpl implements LoginService {
         // redis中key的命名规范通常是"项目名:功能名:uuid",为了方便统一管理将字符串常量放到Constant类
         // uuid作用：前端同一时刻可能有多个用户登录,此时redis会存储很多验证码,校验时就没法判断是哪个用户
         String codeKey = RedisConstant.CAPTCHA_PREFIX + UUID.randomUUID();
+        // key过期会自动删除：a.客户端访问时发现过期于是删除(惰性删除) b.服务端定期检查发现过期立马删除
+        // ttl查看生命周期：-1永不过期,-2已经过期
         redisTemplate.opsForValue().set(codeKey, codeValue, RedisConstant.CAPTCHA_TTL_SEC, TimeUnit.SECONDS);
 
         // 3.返回CaptchaVo对象
