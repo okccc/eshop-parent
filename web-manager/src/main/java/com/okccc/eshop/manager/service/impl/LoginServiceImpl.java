@@ -1,14 +1,22 @@
 package com.okccc.eshop.manager.service.impl;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.*;
+import com.alibaba.fastjson2.JSON;
 import com.okccc.eshop.manager.constant.RedisConstant;
+import com.okccc.eshop.manager.handler.MyRuntimeException;
+import com.okccc.eshop.manager.result.ResultCodeEnum;
+import com.okccc.eshop.manager.mapper.SysUserMapper;
 import com.okccc.eshop.manager.service.LoginService;
+import com.okccc.eshop.model.dto.system.LoginDto;
+import com.okccc.eshop.model.entity.system.SysUser;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
+import com.okccc.eshop.model.vo.system.LoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +33,9 @@ public class LoginServiceImpl implements LoginService {
     // 自动注入时可以点击左侧Navigate按钮查看组件来源
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
 
     @Override
     public CaptchaVo getCaptcha() {
@@ -45,6 +56,52 @@ public class LoginServiceImpl implements LoginService {
 
         // 3.返回CaptchaVo对象
         return new CaptchaVo(codeKey, codeImage);
+    }
+
+    @Override
+    public LoginVo login(LoginDto loginDto) {
+        // 1.校验验证码
+        if (!StringUtils.hasText(loginDto.getCaptcha())) {
+            // 未输入验证码
+            throw new MyRuntimeException(ResultCodeEnum.CAPTCHA_CODE_NOT_FOUND);
+        }
+
+        String code = redisTemplate.opsForValue().get(loginDto.getCodeKey());
+        if (code == null) {
+            // 验证码已过期
+            throw new MyRuntimeException(ResultCodeEnum.CAPTCHA_CODE_EXPIRED);
+        }
+
+        if (!code.equalsIgnoreCase(loginDto.getCaptcha())) {
+            // 验证码错误
+            throw new MyRuntimeException(ResultCodeEnum.CAPTCHA_CODE_ERROR);
+        }
+
+        // 2.校验用户名密码
+        log.info("登录 - 根据用户名查找：{}", loginDto.getUsername());
+        SysUser sysUser = sysUserMapper.selectByUsername(loginDto.getUsername());
+        if (sysUser == null) {
+            // 用户不存在
+            throw new MyRuntimeException(ResultCodeEnum.ACCOUNT_NOT_EXIST_ERROR);
+        }
+
+        if (!sysUser.getPassword().equals(DigestUtils.md5DigestAsHex(loginDto.getPassword().getBytes()))) {
+            // 用户名或密码错误
+            throw new MyRuntimeException(ResultCodeEnum.ACCOUNT_ERROR);
+        }
+
+        if (sysUser.getStatus() == 0) {
+            // 该用户已被禁用
+            throw new MyRuntimeException(ResultCodeEnum.ACCOUNT_DISABLED_ERROR);
+        }
+
+        // 3.登录成功,生成token保存到redis并设置有效期
+        // 前端将token存储在localStorage(5M),比cookie(4K)容量更大,后续发送请求时就会在请求头携带该token
+        String token = RedisConstant.LOGIN_PREFIX + UUID.randomUUID();
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(sysUser), RedisConstant.LOGIN_TTL_DAY, TimeUnit.DAYS);
+
+        // 4.返回token
+        return new LoginVo(token);
     }
 
 }

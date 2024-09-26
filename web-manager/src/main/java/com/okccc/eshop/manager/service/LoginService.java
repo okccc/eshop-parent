@@ -1,6 +1,8 @@
 package com.okccc.eshop.manager.service;
 
+import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
+import com.okccc.eshop.model.vo.system.LoginVo;
 
 /**
  * @Author: okccc
@@ -11,4 +13,7 @@ public interface LoginService {
 
     // 获取图片验证码
     CaptchaVo getCaptcha();
+
+    // 用户登录
+    LoginVo login(LoginDto loginDto);
 }

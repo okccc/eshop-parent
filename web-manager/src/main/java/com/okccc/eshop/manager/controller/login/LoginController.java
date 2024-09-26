@@ -2,20 +2,23 @@ package com.okccc.eshop.manager.controller.login;
 
 import com.okccc.eshop.manager.result.Result;
 import com.okccc.eshop.manager.service.LoginService;
+import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
+import com.okccc.eshop.model.vo.system.LoginVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: okccc
  * @Date: 2024/4/20 12:16:55
- * @Desc:
+ * @Desc: 登录接口包含获取验证码、登录、获取当前用户信息、登录校验拦截器四个功能
  *
  * 验证码作用：防止爬虫等自动化程序发送恶意攻击暴力破解密码
+ *
+ * 项目中使用的Token通常指JWT(JSON Web TOKEN),是一种轻量级的安全传输方式,用于身份验证和信息传递
+ * F12 - Application - Storage - Cookies/Local storage是浏览器存储sessionId/token的地方
  */
 @Tag(name = "登录接口")
 @RestController
@@ -30,6 +33,13 @@ public class LoginController {
     public Result<CaptchaVo> getCaptcha() {
         CaptchaVo captchaVo = loginService.getCaptcha();
         return Result.ok(captchaVo);
+    }
+
+    @Operation(summary = "登录")
+    @PostMapping(value = "/login")
+    public Result<LoginVo> login(@RequestBody LoginDto loginDto) {
+        LoginVo loginVo = loginService.login(loginDto);
+        return Result.ok(loginVo);
     }
 
 }
