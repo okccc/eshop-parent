@@ -2,7 +2,7 @@ package com.okccc.eshop.manager.controller.login;
 
 import com.okccc.eshop.manager.result.Result;
 import com.okccc.eshop.manager.service.LoginService;
-import com.okccc.eshop.manager.service.SysUserService;
+import com.okccc.eshop.manager.util.ThreadLocalUtil;
 import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.entity.system.SysUser;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
@@ -30,9 +30,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private SysUserService sysUserService;
-
     @Operation(summary = "获取图片验证码")
     @GetMapping(value = "/getCaptcha")
     public Result<CaptchaVo> getCaptcha() {
@@ -49,9 +46,14 @@ public class LoginController {
 
     @Operation(summary = "获取当前用户信息")
     @GetMapping(value = "/getUserInfo")
-    public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
-        // 根据token获取登录用户信息
-        SysUser sysUser = sysUserService.getUserInfo(token);
+//    public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
+//        // 根据token获取登录用户信息
+//        SysUser sysUser = sysUserService.getUserInfo(token);
+//        return Result.ok(sysUser);
+//    }
+    public Result<SysUser> getUserInfo() {
+        // 优化：登录校验时已经根据token获取登录用户信息,直接从ThreadLocal获取即可
+        SysUser sysUser = ThreadLocalUtil.getSysUser();
         return Result.ok(sysUser);
     }
 
