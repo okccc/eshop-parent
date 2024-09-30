@@ -2,6 +2,7 @@ package com.okccc.eshop.manager.controller.login;
 
 import com.okccc.eshop.manager.result.Result;
 import com.okccc.eshop.manager.service.LoginService;
+import com.okccc.eshop.manager.service.SysUserService;
 import com.okccc.eshop.manager.util.ThreadLocalUtil;
 import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.entity.system.SysUser;
@@ -30,6 +31,9 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    private SysUserService sysUserService;
+
     @Operation(summary = "获取图片验证码")
     @GetMapping(value = "/getCaptcha")
     public Result<CaptchaVo> getCaptcha() {
@@ -55,6 +59,13 @@ public class LoginController {
         // 优化：登录校验时已经根据token获取登录用户信息,直接从ThreadLocal获取即可
         SysUser sysUser = ThreadLocalUtil.getSysUser();
         return Result.ok(sysUser);
+    }
+
+    @Operation(summary = "退出")
+    @GetMapping(value = "/logout")
+    public Result logout(@RequestHeader(name = "token") String token) {
+        sysUserService.logout(token);
+        return Result.ok();
     }
 
 }
