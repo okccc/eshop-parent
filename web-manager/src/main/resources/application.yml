@@ -17,6 +17,11 @@ spring:
       host: localhost
       port: 6379
 
+# knife4j配置
+springdoc:
+  # 接口文档中类似queryVo={"provinceId":"1","cityId":"1"}这种参数不方便调试,可以将其扁平化
+  default-flat-param-object: true
+
 # 自定义配置
 eshop:
   auth:
