@@ -15,6 +15,15 @@ spring:
     url: jdbc:mysql://localhost:3306/eshop?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: Q-D37Sq*k61#yT_y
+    # hikari详细配置(com.zaxxer.hikari.HikariConfig)
+    hikari:
+      pool-name: HikariPool  # 连接池名称
+      connection-test-query: SELECT 1  # 自动检测连接
+      connection-timeout: 30000  # 连接超时时间,默认30s
+      maximum-pool-size: 10  # 最大连接数,默认10
+      minimum-idle: 5  # 最小空闲连接数
+      max-lifetime: 0  # 连接最大存活时间,0不过期,默认30min
+      idle-timeout: 0  # 连接最大空闲时间,默认10min
   # redis
   data:
     redis:
