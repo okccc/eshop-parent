@@ -30,6 +30,11 @@ spring:
       host: localhost
       port: 6379
 
+# mybatis配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml
+
 # knife4j配置
 springdoc:
   # 接口文档中类似queryVo={"provinceId":"1","cityId":"1"}这种参数不方便调试,可以将其扁平化
