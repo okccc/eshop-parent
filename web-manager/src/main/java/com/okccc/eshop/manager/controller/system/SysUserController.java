@@ -1,8 +1,14 @@
 package com.okccc.eshop.manager.controller.system;
 
+import com.okccc.eshop.manager.result.PageResult;
+import com.okccc.eshop.manager.result.Result;
+import com.okccc.eshop.manager.service.SysUserService;
+import com.okccc.eshop.model.dto.system.SysUserDto;
+import com.okccc.eshop.model.entity.system.SysUser;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: okccc
@@ -22,5 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/admin/system/sysUser")
 public class SysUserController {
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    @Operation(summary = "分页查询用户")
+    @GetMapping(value = "page")
+    public Result<PageResult<SysUser>> page(Integer pageNum, Integer pageSize, SysUserDto sysUserDto) {
+        // 分页查询,带搜索条件
+        PageResult<SysUser> pageResult = sysUserService.page(pageNum, pageSize, sysUserDto);
+        return Result.ok(pageResult);
+    }
 
 }

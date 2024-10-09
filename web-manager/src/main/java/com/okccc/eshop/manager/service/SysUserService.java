@@ -1,5 +1,7 @@
 package com.okccc.eshop.manager.service;
 
+import com.okccc.eshop.manager.result.PageResult;
+import com.okccc.eshop.model.dto.system.SysUserDto;
 import com.okccc.eshop.model.entity.system.SysUser;
 
 /**
@@ -14,5 +16,8 @@ public interface SysUserService {
 
     // 用户退出
     void logout(String token);
+
+    // 分页查询,带搜索条件
+    PageResult<SysUser> page(Integer pageNum, Integer pageSize, SysUserDto sysUserDto);
 
 }

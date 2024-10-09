@@ -4,9 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.okccc.eshop.manager.handler.MyRuntimeException;
-import com.okccc.eshop.manager.mapper.SysRoleMapper;
 import com.okccc.eshop.manager.mapper.SysUserMapper;
-import com.okccc.eshop.manager.mapper.SysUserRoleMapper;
 import com.okccc.eshop.manager.result.PageResult;
 import com.okccc.eshop.manager.result.ResultCodeEnum;
 import com.okccc.eshop.manager.service.SysUserService;
@@ -29,12 +27,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
-
-    @Autowired
-    private SysRoleMapper sysRoleMapper;
-
-    @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;

@@ -10,4 +10,25 @@
     <select id="selectByUsername" resultType="com.okccc.eshop.model.entity.system.SysUser">
         select * from sys_user where username = #{username} and is_deleted = 0
     </select>
+
+    <!-- Page<SysUser> selectPage(SysUserDto sysUserDto); -->
+    <select id="selectPage" resultType="com.okccc.eshop.model.entity.system.SysUser">
+        select *
+        from sys_user
+        <where>
+            <!-- 传入实体类参数时要写实体类的属性名而不是数据库表的列名 -->
+            <if test="keyword != null and keyword != ''">
+                and username like concat('%',#{keyword},'%')
+            </if>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and create_time >= #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                <!-- xml文件中的小于号要转义,不然报错：org.xml.sax.SAXParseException 元素内容必须由格式正确的字符数据或标记组成 -->
+<!--                and create_time <= #{createTimeEnd}-->
+                and create_time &lt;= #{createTimeEnd}
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
 </mapper>
