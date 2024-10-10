@@ -31,4 +31,46 @@
             and is_deleted = 0
         </where>
     </select>
+
+    <!-- void insert(SysUser sysUser); -->
+    <insert id="insert">
+        insert into sys_user (username,password,name,phone,avatar,description,status) values
+        (#{username}, #{password}, #{name}, #{phone}, #{avatar}, #{description}, #{status})
+    </insert>
+
+    <!-- void updateById(SysUser sysUser); -->
+    <update id="updateById">
+        update sys_user set
+        <if test="username != null and username != ''">
+            username = #{username},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        <!-- update sys_user set username = ?, where id = ? -->
+        <!-- update sys_user set username = ?, update_time = now() where id = ? -->
+        <!-- 技巧：update语句手动添加update_time,防止有些字段为空,然后where前面出现","导致sql报错 -->
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!-- void deleteById(Long id); -->
+    <delete id="deleteById">
+        update sys_user set is_deleted = 1 where id = #{id}
+    </delete>
 </mapper>

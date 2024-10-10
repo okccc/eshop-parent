@@ -40,4 +40,25 @@ public class SysUserController {
         return Result.ok(pageResult);
     }
 
+    @Operation(summary = "添加用户")
+    @PostMapping
+    public Result save(@RequestBody SysUser sysUser) {
+        sysUserService.save(sysUser);
+        return Result.ok();
+    }
+
+    @Operation(summary = "根据id修改用户")
+    @PutMapping
+    public Result updateById(@RequestBody SysUser sysUser) {
+        sysUserService.updateById(sysUser);
+        return Result.ok();
+    }
+
+    @Operation(summary = "根据id删除用户")
+    @DeleteMapping(value = "{id}")
+    public Result removeById(@PathVariable("id") Long id) {
+        sysUserService.removeById(id) ;
+        return Result.ok();
+    }
+
 }

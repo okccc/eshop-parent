@@ -20,4 +20,13 @@ public interface SysUserService {
     // 分页查询,带搜索条件
     PageResult<SysUser> page(Integer pageNum, Integer pageSize, SysUserDto sysUserDto);
 
+    // 添加用户
+    void save(SysUser sysUser);
+
+    // 修改用户
+    void updateById(SysUser sysUser);
+
+    // 删除用户
+    void removeById(Long id);
+
 }

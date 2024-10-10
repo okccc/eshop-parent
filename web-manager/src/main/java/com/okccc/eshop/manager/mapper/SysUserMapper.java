@@ -18,4 +18,13 @@ public interface SysUserMapper {
 
     // 分页查询,带搜索条件,条件可能为空,所以用动态sql实现
     Page<SysUser> selectPage(SysUserDto sysUserDto);
+
+    // 添加用户
+    void insert(SysUser sysUser);
+
+    // 修改用户
+    void updateById(SysUser sysUser);
+
+    // 根据id删除用户
+    void deleteById(Long id);
 }
