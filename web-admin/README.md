@@ -59,3 +59,13 @@ npm install --registry=https://registry.npm.taobao.org
 # 启动服务,打开页面
 npm start
 ```
+
+## 后台管理系统 - 后台工程搭建
+```shell
+# MinIO是一款免费的对象存储服务器,可以存储图片、语音、视频等非结构化数据
+# MinIO官网地址：https://www.minio.org.cn/docs/minio/macos/index.html
+# 安装：brew install minio/stable/minio
+# 启动：minio server /Users/okc/modules/minio  服务器存放上传文件的目录
+# 登录：http://127.0.0.1:9000  minioadmin/minioadmin
+# 已上传图片到minio服务器,但是前端页面没有访问权限：Administrator - Buckets - Summary - Access Policy - Public
+```
