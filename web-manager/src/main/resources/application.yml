@@ -46,3 +46,9 @@ eshop:
     noAuthUrls:
       - /admin/system/index/login
       - /admin/system/index/getCaptcha
+
+  minio:
+    endpoint: http://127.0.0.1:9000
+    accessKey: minioadmin
+    secretKey: minioadmin
+    bucketName: eshop-bucket
