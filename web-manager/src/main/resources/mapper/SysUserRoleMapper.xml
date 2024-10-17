@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.SysUserRoleMapper">
+
+    <!-- List<Long> selectListByUserId(Long userId); -->
+    <select id="selectListByUserId" resultType="java.lang.Long">
+        select role_id from sys_user_role where user_id = #{userId}
+    </select>
+</mapper>
