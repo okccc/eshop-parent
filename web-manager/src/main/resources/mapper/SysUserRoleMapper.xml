@@ -10,4 +10,22 @@
     <select id="selectListByUserId" resultType="java.lang.Long">
         select role_id from sys_user_role where user_id = #{userId}
     </select>
+
+    <!-- void deleteByUserId(Long userId); -->
+    <delete id="deleteByUserId">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+
+    <!-- void insert(@Param("userId") Long userId, @Param("roleId") Long roleId); -->
+    <insert id="insert">
+        insert into sys_user_role (user_id,role_id) values (#{userId}, #{roleId})
+    </insert>
+
+    <!-- void insertBatch(@Param("userId") Long userId, @Param("roleIdList") List<Long> roleIdList); -->
+    <insert id="insertBatch">
+        insert into sys_user_role (user_id,role_id) values
+        <foreach collection="roleIdList" item="roleId" separator=",">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
 </mapper>

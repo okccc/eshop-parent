@@ -62,6 +62,9 @@ npm start
 
 ## 后台管理系统 - 后台工程搭建
 ```shell
+# 权限管理
+# 用户表和角色表是多对多关系,角色表和菜单表也是多对多关系
+
 # MinIO是一款免费的对象存储服务器,可以存储图片、语音、视频等非结构化数据
 # MinIO官网地址：https://www.minio.org.cn/docs/minio/macos/index.html
 # 安装：brew install minio/stable/minio
