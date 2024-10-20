@@ -31,4 +31,25 @@ public class SysMenuController {
         return Result.ok(list);
     }
 
+    @Operation(summary = "添加菜单")
+    @PostMapping
+    public Result save(@RequestBody SysMenu sysMenu) {
+        sysMenuService.save(sysMenu);
+        return Result.ok();
+    }
+
+    @Operation(summary = "根据id修改菜单")
+    @PutMapping
+    public Result updateById(@RequestBody SysMenu sysMenu) {
+        sysMenuService.updateById(sysMenu);
+        return Result.ok();
+    }
+
+    @Operation(summary = "根据id删除菜单")
+    @DeleteMapping(value = "{id}")
+    public Result removeById(@PathVariable("id") Long id) {
+        sysMenuService.removeById(id);
+        return Result.ok();
+    }
+
 }

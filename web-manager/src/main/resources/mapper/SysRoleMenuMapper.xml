@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.SysRoleMenuMapper">
+
+    <!-- void updateIsHalfByMenuId(Long menuId); -->
+    <update id="updateIsHalfByMenuId">
+        update sys_role_menu set is_half = 1 where menu_id = #{menuId}
+    </update>
+</mapper>

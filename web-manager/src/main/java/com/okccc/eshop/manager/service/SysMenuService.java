@@ -13,4 +13,13 @@ public interface SysMenuService {
 
     // 查询所有菜单
     List<SysMenu> treeList();
+
+    // 添加菜单
+    void save(SysMenu sysMenu);
+
+    // 修改菜单
+    void updateById(SysMenu sysMenu);
+
+    // 删除菜单
+    void removeById(Long id);
 }

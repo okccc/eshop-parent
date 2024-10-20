@@ -10,4 +10,47 @@
     <select id="selectList" resultType="com.okccc.eshop.model.entity.system.SysMenu">
         select * from sys_menu where is_deleted = 0
     </select>
+
+    <!-- void insert(SysMenu sysMenu); -->
+    <insert id="insert">
+        insert into sys_menu (parent_id,title,component,sort_value,status) values
+        (#{parentId}, #{title}, #{component}, #{sortValue}, #{status})
+    </insert>
+
+    <!-- SysMenu selectById(Long parentId); -->
+    <select id="selectById" resultType="com.okccc.eshop.model.entity.system.SysMenu">
+        select * from sys_menu where id = #{parentId}
+    </select>
+
+    <!-- void updateById(SysMenu sysMenu); -->
+    <update id="updateById">
+        update sys_menu set
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
+        </if>
+        <if test="sortValue != null">
+            sort_value = #{sortValue},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!-- int selectCountByParentId(Long id); -->
+    <select id="selectCountByParentId" resultType="java.lang.Integer">
+        select count(*) from sys_menu where parent_id = #{id} and is_deleted = 0
+    </select>
+
+    <!-- void deleteById(Long id); -->
+    <update id="deleteById">
+        update sys_menu set is_deleted = 1 where id = #{id}
+    </update>
 </mapper>
