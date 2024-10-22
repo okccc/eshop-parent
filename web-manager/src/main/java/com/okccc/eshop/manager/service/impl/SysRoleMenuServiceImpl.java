@@ -3,10 +3,12 @@ package com.okccc.eshop.manager.service.impl;
 import com.okccc.eshop.manager.mapper.SysRoleMenuMapper;
 import com.okccc.eshop.manager.service.SysMenuService;
 import com.okccc.eshop.manager.service.SysRoleMenuService;
+import com.okccc.eshop.model.dto.system.AssignMenuDto;
 import com.okccc.eshop.model.entity.system.SysMenu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,26 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
         hashMap.put("sysMenuList", sysMenuList);
         hashMap.put("menuIdList", menuIdList);
         return hashMap;
+    }
+
+    @Override
+    public void doAssign(AssignMenuDto assignMenuDto) {
+        // 先删除角色之前分配的菜单
+        Long roleId = assignMenuDto.getRoleId();
+        log.info("角色菜单管理 - 根据角色id删除菜单：{}", roleId);
+        sysRoleMenuMapper.deleteByRoleId(roleId);
+
+        // 再给角色重新分配新的菜单
+        List<Map<String, Number>> menuIdList = assignMenuDto.getMenuIdList();
+        if (!CollectionUtils.isEmpty(menuIdList)) {
+//            for (Map<String, Number> menuId : menuIdList) {
+//                log.info("角色菜单管理 - 根据角色id分配菜单：{},{}", roleId, menuId);
+//                sysRoleMenuMapper.insert(roleId, menuId);
+//            }
+            // 一次性批量插入比多次插入性能更好
+            log.info("角色菜单管理 - 根据角色id分配菜单：{},{}", roleId, menuIdList);
+            sysRoleMenuMapper.insertBatch(roleId, menuIdList);
+        }
     }
 
 }

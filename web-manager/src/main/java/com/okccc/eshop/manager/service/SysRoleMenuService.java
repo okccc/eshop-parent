@@ -1,5 +1,7 @@
 package com.okccc.eshop.manager.service;
 
+import com.okccc.eshop.model.dto.system.AssignMenuDto;
+
 import java.util.Map;
 
 /**
@@ -11,4 +13,7 @@ public interface SysRoleMenuService {
 
     // 菜单数据回显
     Map<String, Object> displayByRoleId(Long roleId);
+
+    // 分配菜单
+    void doAssign(AssignMenuDto assignMenuDto);
 }
