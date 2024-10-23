@@ -7,11 +7,13 @@ import com.okccc.eshop.manager.result.ResultCodeEnum;
 import com.okccc.eshop.manager.service.SysMenuService;
 import com.okccc.eshop.manager.util.MenuUtil;
 import com.okccc.eshop.model.entity.system.SysMenu;
+import com.okccc.eshop.model.vo.system.SysMenuVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,6 +84,38 @@ public class SysMenuServiceImpl implements SysMenuService {
         // 不包含就直接删除
         log.info("菜单管理 - 根据id删除菜单：{}", id);
         sysMenuMapper.deleteById(id);
+    }
+
+    @Override
+    public List<SysMenuVo> treeListByUserId(Long userId) {
+        // 查询当前用户可以操作的菜单
+        log.info("菜单管理 - 根据userId查询可操作的菜单：{}", userId);
+        List<SysMenu> list = sysMenuMapper.selectListByUserId(userId);
+
+        // 将其封装成树形结构
+        List<SysMenu> sysMenuList = MenuUtil.buildTree(list);
+
+        // 转换成前端需要的格式
+        return buildMenus(sysMenuList);
+    }
+
+    private List<SysMenuVo> buildMenus(List<SysMenu> sysMenuList) {
+        // 封装SysMenuVo的集合
+        List<SysMenuVo> sysMenuVoList = new ArrayList<>();
+        for (SysMenu sysMenu : sysMenuList) {
+            // 将SysMenu转换成SysMenuVo
+            SysMenuVo sysMenuVo = new SysMenuVo();
+            sysMenuVo.setTitle(sysMenu.getTitle());
+            sysMenuVo.setName(sysMenu.getComponent());
+            List<SysMenu> children = sysMenu.getChildren();
+            if (!CollectionUtils.isEmpty(children)) {
+                sysMenuVo.setChildren(buildMenus(children));
+            }
+            sysMenuVoList.add(sysMenuVo);
+        }
+
+        // 返回结果
+        return sysMenuVoList;
     }
 
 }

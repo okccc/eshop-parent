@@ -2,16 +2,20 @@ package com.okccc.eshop.manager.controller.login;
 
 import com.okccc.eshop.manager.result.Result;
 import com.okccc.eshop.manager.service.LoginService;
+import com.okccc.eshop.manager.service.SysMenuService;
 import com.okccc.eshop.manager.service.SysUserService;
 import com.okccc.eshop.manager.util.ThreadLocalUtil;
 import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.entity.system.SysUser;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
 import com.okccc.eshop.model.vo.system.LoginVo;
+import com.okccc.eshop.model.vo.system.SysMenuVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: okccc
@@ -33,6 +37,9 @@ public class LoginController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Operation(summary = "获取图片验证码")
     @GetMapping(value = "/getCaptcha")
@@ -66,6 +73,17 @@ public class LoginController {
     public Result logout(@RequestHeader(name = "token") String token) {
         sysUserService.logout(token);
         return Result.ok();
+    }
+
+    @Operation(summary = "动态菜单")
+    @GetMapping(value = "/menus")
+    public Result<List<SysMenuVo>> menus() {
+        // 动态菜单：首页的左侧菜单不是固定的,应该根据当前登录用户所对应的角色动态获取
+        Long userId = ThreadLocalUtil.getSysUser().getId();
+
+        // 查询当前用户可以操作的菜单(多表关联)
+        List<SysMenuVo> list = sysMenuService.treeListByUserId(userId);
+        return Result.ok(list);
     }
 
 }
