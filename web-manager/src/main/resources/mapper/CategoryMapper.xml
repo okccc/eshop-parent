@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.CategoryMapper">
+
+    <!-- List<Category> selectByParentId(Long parentId); -->
+    <select id="selectByParentId" resultType="com.okccc.eshop.model.entity.product.Category">
+        select * from category where parent_id = #{parentId} and is_deleted = 0
+    </select>
+
+    <!-- int countByParentId(Long parentId); -->
+    <select id="countByParentId" resultType="java.lang.Integer">
+        SELECT count(*) FROM category WHERE parent_id = #{parentId} and is_deleted = 0
+    </select>
+</mapper>
