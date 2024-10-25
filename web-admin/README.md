@@ -71,4 +71,10 @@ npm start
 # 启动：minio server /Users/okc/modules/minio  服务器存放上传文件的目录
 # 登录：http://127.0.0.1:9000  minioadmin/minioadmin
 # 已上传图片到minio服务器,但是前端页面没有访问权限：Administrator - Buckets - Summary - Access Policy - Public
+
+# EasyExcel是一个快速、简洁、解决大文件内存溢出的Excel处理工具
+# EasyExcel官网地址：https://easyexcel.opensource.alibaba.com/docs/current/
+# 提高操作效率：手动逐条添加或修改数据费时费力且容易出错,此时就可以将大量数据从Excel导入到系统中
+# 实现数据备份：可以将系统中的数据导出为Excel,防止数据丢失
+# 方便部门协作：不同部门会使用不同的工具进行数据处理,导入导出Excel方便转换和共享数据
 ```
