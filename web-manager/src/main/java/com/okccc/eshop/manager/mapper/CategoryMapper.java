@@ -14,6 +14,9 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
+    // 查询所有分类
+    List<Category> selectList();
+
     // 根据parentId查询子分类
     List<Category> selectByParentId(Long parentId);
 

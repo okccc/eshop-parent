@@ -5,6 +5,7 @@ import com.okccc.eshop.manager.service.CategoryService;
 import com.okccc.eshop.model.entity.product.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,12 @@ public class CategoryController {
         // 所以前端采用懒加载方式,默认只显示第一层分类(parentId=0),手动点击再根据parentId去查询子分类
         List<Category> list = categoryService.getByParentId(parentId);
         return Result.ok(list);
+    }
+
+    @Operation(summary = "导出excel")
+    @GetMapping(value = "/exportData")
+    public void exportData(HttpServletResponse response) {
+        categoryService.exportData(response);
     }
 
 }
