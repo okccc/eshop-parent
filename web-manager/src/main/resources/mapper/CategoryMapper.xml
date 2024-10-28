@@ -6,6 +6,11 @@
 <!-- 映射文件负责写crud -->
 <mapper namespace="com.okccc.eshop.manager.mapper.CategoryMapper">
 
+    <!-- List<Category> selectList(); -->
+    <select id="selectList" resultType="com.okccc.eshop.model.entity.product.Category">
+        select * from category where is_deleted = 0 order by id
+    </select>
+
     <!-- List<Category> selectByParentId(Long parentId); -->
     <select id="selectByParentId" resultType="com.okccc.eshop.model.entity.product.Category">
         select * from category where parent_id = #{parentId} and is_deleted = 0

@@ -2,6 +2,7 @@ package com.okccc.eshop.manager.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.okccc.eshop.manager.handler.MyRuntimeException;
+import com.okccc.eshop.manager.listener.CategoryExcelListener;
 import com.okccc.eshop.manager.mapper.CategoryMapper;
 import com.okccc.eshop.manager.result.ResultCodeEnum;
 import com.okccc.eshop.manager.service.CategoryService;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -75,6 +78,22 @@ public class CategoryServiceImpl implements CategoryService {
                     .sheet("分类数据")
                     .doWrite(categoryExcelList);
         } catch (Exception e) {
+            throw new MyRuntimeException(ResultCodeEnum.DATA_ERROR);
+        }
+    }
+
+    @Override
+    public void importData(MultipartFile file) {
+        // 1.每次读取excel都是创建新的监听器对象,避免并发问题
+        CategoryExcelListener categoryExcelListener = new CategoryExcelListener(categoryMapper);
+
+        try {
+            // 2.使用EasyExcel完成读操作
+            EasyExcel
+                    .read(file.getInputStream(), CategoryExcel.class, categoryExcelListener)
+                    .sheet()
+                    .doRead();
+        } catch (IOException e) {
             throw new MyRuntimeException(ResultCodeEnum.DATA_ERROR);
         }
     }
