@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.BrandMapper">
+
+    <!-- Page<Brand> selectPage(); -->
+    <select id="selectPage" resultType="com.okccc.eshop.model.entity.product.Brand">
+        select * from brand where is_deleted = 0
+    </select>
+
+    <!-- void insert(Brand brand); -->
+    <insert id="insert">
+        insert into brand (name,logo) values (#{name}, #{logo})
+    </insert>
+
+    <!-- void updateById(Brand brand); -->
+    <update id="updateById">
+        update brand set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="logo != null and logo != ''">
+            logo = #{logo},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!-- void deleteById(Long id); -->
+    <delete id="deleteById">
+        update brand set is_deleted = 1 where id = #{id}
+    </delete>
+</mapper>
