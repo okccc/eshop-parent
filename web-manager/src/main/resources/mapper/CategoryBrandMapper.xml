@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.CategoryBrandMapper">
+
+    <!-- Page<CategoryBrand> selectPage(CategoryBrandDto categoryBrandDto); -->
+    <select id="selectPage" resultType="com.okccc.eshop.model.entity.product.CategoryBrand">
+        SELECT
+            t1.*,
+            t2.name categoryName,
+            t3.name brandName,
+            t3.logo
+        FROM category_brand t1
+        JOIN category t2 ON t1.category_id = t2.id
+        JOIN brand t3 ON t1.brand_id = t3.id
+        <where>
+            <if test="categoryId != null and categoryId !=''">
+                and t1.category_id = #{categoryId}
+            </if>
+            <if test="brandId != null and brandId !=''">
+                and t1.brand_id = #{brandId}
+            </if>
+            and t1.is_deleted = 0
+        </where>
+    </select>
+
+    <!-- void insert(CategoryBrand categoryBrand); -->
+    <insert id="insert">
+        insert into category_brand (brand_id,category_id) values (#{brandId}, #{categoryId})
+    </insert>
+
+    <!-- void updateById(CategoryBrand categoryBrand); -->
+    <update id="updateById">
+        update category_brand set
+        <if test="categoryId != null and categoryId != ''">
+            category_id = #{categoryId},
+        </if>
+        <if test="brandId != null and brandId != ''">
+            brand_id = #{brandId},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!-- void deleteById(Long id); -->
+    <delete id="deleteById">
+        update category_brand set is_deleted = 1 where id = #{id}
+    </delete>
+
+    <!-- List<Brand> selectBrandListByCategoryId(Long categoryId); -->
+    <select id="selectBrandListByCategoryId" resultType="com.okccc.eshop.model.entity.product.Brand">
+        select t1.*
+        from brand t1
+        join category_brand t2 on t1.id = t2.brand_id
+        where t2.category_id = #{categoryId} and t2.is_deleted = 0
+        order by t1.id
+    </select>
+</mapper>
