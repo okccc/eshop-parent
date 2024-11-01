@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.ProductUnitMapper">
+
+    <!-- List<ProductUnit> selectList(); -->
+    <select id="selectList" resultType="com.okccc.eshop.model.entity.product.ProductUnit">
+        select * from product_unit where is_deleted = 0 order by id
+    </select>
+</mapper>
