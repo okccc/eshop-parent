@@ -72,6 +72,8 @@ npm start
 # 登录：http://127.0.0.1:9000  minioadmin/minioadmin
 # 已上传图片到minio服务器,但是前端页面没有访问权限：Administrator - Buckets - Summary - Access Policy - Public
 
+# 商品管理
+# 分类、品牌、分类品牌、商品规格、商品单元这些接口最终都是为商品接口服务
 # EasyExcel是一个快速、简洁、解决大文件内存溢出的Excel处理工具
 # EasyExcel官网地址：https://easyexcel.opensource.alibaba.com/docs/current/
 # 提高操作效率：手动逐条添加或修改数据费时费力且容易出错,此时就可以将大量数据从Excel导入到系统中
