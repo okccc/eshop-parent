@@ -15,4 +15,10 @@ public interface ProductMapper {
 
     // 分页查询商品,带搜索条件
     Page<Product> selectPage(ProductDto productDto);
+
+    // 根据id查询商品
+    Product selectById(Long id);
+
+    // 添加商品
+    void insert(Product product);
 }

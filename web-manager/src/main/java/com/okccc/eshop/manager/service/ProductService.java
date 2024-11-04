@@ -13,4 +13,7 @@ public interface ProductService {
 
     // 分页查询商品,带搜索条件
     PageResult<Product> page(Integer pageNum, Integer pageSize, ProductDto productDto);
+
+    // 添加商品
+    void save(Product product);
 }

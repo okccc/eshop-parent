@@ -22,6 +22,14 @@ import org.springframework.web.bind.annotation.*;
  * 1.查询所有分类数据,在搜索表单的分类下拉框中展示(category)
  * 2.查询所有品牌数据,在搜索表单的品牌下拉框中展示(brand)
  * 3.分页查询商品数据(product)
+ *
+ * 添加商品需要调用六个接口
+ * 1.查询所有分类数据,在添加商品的分类下拉框中展示(category)
+ * 2.根据选中的三级分类查询对应的品牌数据,在添加商品的品牌下拉框中展示(brand、category_brand)
+ * 3.查询所有商品单元,在添加商品的单元下拉框中展示(product_unit)
+ * 4.查询所有商品规格,在添加商品的规格下拉框中展示(product_spec)
+ * 5.上传图片接口,包括轮播图和详情图
+ * 6.添加商品数据(product、product_sku、product_detail)
  */
 @Tag(name = "商品接口")
 @RestController
@@ -36,5 +44,12 @@ public class ProductController {
     public Result<PageResult<Product>> page(Integer pageNum, Integer pageSize, ProductDto productDto) {
         PageResult<Product> pageResult = productService.page(pageNum, pageSize, productDto);
         return Result.ok(pageResult);
+    }
+
+    @Operation(summary = "添加商品")
+    @PostMapping
+    public Result save(@RequestBody Product product) {
+        productService.save(product);
+        return Result.ok();
     }
 }

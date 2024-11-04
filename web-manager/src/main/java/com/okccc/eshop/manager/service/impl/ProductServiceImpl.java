@@ -2,14 +2,20 @@ package com.okccc.eshop.manager.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.okccc.eshop.manager.mapper.ProductMapper;
 import com.okccc.eshop.manager.result.PageResult;
-import com.okccc.eshop.manager.service.ProductService;
 import com.okccc.eshop.model.dto.product.ProductDto;
 import com.okccc.eshop.model.entity.product.Product;
+import com.okccc.eshop.model.entity.product.ProductDetail;
+import com.okccc.eshop.model.entity.product.ProductSku;
+import com.okccc.eshop.manager.mapper.ProductDetailsMapper;
+import com.okccc.eshop.manager.mapper.ProductMapper;
+import com.okccc.eshop.manager.mapper.ProductSkuMapper;
+import com.okccc.eshop.manager.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: okccc
@@ -23,6 +29,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductMapper productMapper;
 
+    @Autowired
+    private ProductSkuMapper productSkuMapper;
+
+    @Autowired
+    private ProductDetailsMapper productDetailsMapper;
+
     @Override
     public PageResult<Product> page(Integer pageNum, Integer pageSize, ProductDto productDto) {
         // 设置分页参数
@@ -34,6 +46,35 @@ public class ProductServiceImpl implements ProductService {
 
         // 封装pageResult对象
         return new PageResult<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public void save(Product product) {
+        // 保存商品基本信息
+        product.setStatus(0);
+        product.setAuditStatus(0);
+        log.info("商品管理 - 添加商品：{}", product);
+        productMapper.insert(product);
+
+        // 保存商品sku信息
+        List<ProductSku> productSkuList = product.getProductSkuList();
+        for (int i = 0; i < productSkuList.size(); i++) {
+            ProductSku productSku = productSkuList.get(i);
+            productSku.setSkuCode(product.getId() + "_" + i);
+            productSku.setProductId(product.getId());
+            productSku.setSkuName(product.getName() + productSku.getSkuSpec());
+            productSku.setSaleNum(0);
+            productSku.setStatus(0);
+            log.info("商品sku管理 - 添加商品sku：{}", productSku);
+            productSkuMapper.insert(productSku);
+        }
+
+        // 保存商品详情信息
+        ProductDetail productDetail = new ProductDetail();
+        productDetail.setProductId(product.getId());
+        productDetail.setImageUrls(product.getDetailsImageUrls());
+        log.info("商品详情管理 - 添加商品详情：{}", productDetail);
+        productDetailsMapper.insert(productDetail);
     }
 
 }
