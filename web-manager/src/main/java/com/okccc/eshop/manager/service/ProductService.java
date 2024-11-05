@@ -16,4 +16,7 @@ public interface ProductService {
 
     // 添加商品
     void save(Product product);
+
+    // 修改商品
+    void updateById(Product product);
 }

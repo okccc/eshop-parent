@@ -52,4 +52,12 @@ public class ProductController {
         productService.save(product);
         return Result.ok();
     }
+
+    @Operation(summary = "修改商品")
+    @PutMapping
+    public Result updateById(@RequestBody Product product) {
+        productService.updateById(product);
+        return Result.ok();
+    }
+
 }

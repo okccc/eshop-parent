@@ -77,4 +77,25 @@ public class ProductServiceImpl implements ProductService {
         productDetailsMapper.insert(productDetail);
     }
 
+    @Override
+    public void updateById(Product product) {
+        // 修改商品基本信息
+        log.info("商品管理 - 根据id修改商品：{}", product);
+        productMapper.updateById(product);
+
+        // 修改商品sku信息
+        List<ProductSku> productSkuList = product.getProductSkuList();
+        for (ProductSku productSku : productSkuList) {
+            log.info("商品sku管理 - 根据id修改商品sku：{}", productSku);
+            productSkuMapper.updateById(productSku);
+        }
+
+        // 修改商品详情信息
+        log.info("商品详情管理 - 根据id查询商品详情：{}", product.getId());
+        ProductDetail productDetail = productDetailsMapper.selectByProductId(product.getId());
+        productDetail.setImageUrls(product.getDetailsImageUrls());
+        log.info("商品详情管理 - 根据id修改商品详情：{}", productDetail);
+        productDetailsMapper.updateById(productDetail);
+    }
+
 }

@@ -6,8 +6,26 @@
 <!-- 映射文件负责写crud -->
 <mapper namespace="com.okccc.eshop.manager.mapper.ProductDetailsMapper">
 
+    <!-- ProductDetail selectByProductId(Long productId); -->
+    <select id="selectByProductId" resultType="com.okccc.eshop.model.entity.product.ProductDetail">
+        select * from product_detail where product_id = #{productId} and is_deleted = 0
+    </select>
+
     <!-- void insert(ProductDetail productDetail); -->
     <insert id="insert">
         insert into product_detail (product_id,image_urls) values (#{productId}, #{imageUrls})
     </insert>
+
+    <!-- void updateById(ProductDetail productDetail); -->
+    <update id="updateById">
+        update product_detail set
+        <if test="productId != null and productId != ''">
+            product_id = #{productId},
+        </if>
+        <if test="imageUrls != null and imageUrls != ''">
+            image_urls = #{imageUrls},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
 </mapper>

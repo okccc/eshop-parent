@@ -21,4 +21,7 @@ public interface ProductMapper {
 
     // 添加商品
     void insert(Product product);
+
+    // 修改商品
+    void updateById(Product product);
 }

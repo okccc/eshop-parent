@@ -11,6 +11,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductDetailsMapper {
 
+    // 根据productId查询商品详情
+    ProductDetail selectByProductId(Long productId);
+
     // 添加商品详情
     void insert(ProductDetail productDetail);
+
+    // 修改商品详情
+    void updateById(ProductDetail productDetail);
 }
