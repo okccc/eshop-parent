@@ -18,4 +18,7 @@ public interface ProductSkuMapper {
 
     // 修改商品sku
     void updateById(ProductSku productSku);
+
+    // 根据id删除商品sku
+    void deleteByProductId(Long productId);
 }

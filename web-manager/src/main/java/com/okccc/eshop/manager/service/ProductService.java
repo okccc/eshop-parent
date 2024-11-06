@@ -19,4 +19,7 @@ public interface ProductService {
 
     // 修改商品
     void updateById(Product product);
+
+    // 根据id删除商品
+    void removeById(Long id);
 }

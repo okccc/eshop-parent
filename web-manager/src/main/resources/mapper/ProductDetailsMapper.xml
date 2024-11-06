@@ -28,4 +28,9 @@
         update_time = now()
         where id = #{id}
     </update>
+
+    <!-- void deleteByProductId(Long productId); -->
+    <update id="deleteByProductId">
+        update product_detail set is_deleted = 1 where product_id = #{productId}
+    </update>
 </mapper>

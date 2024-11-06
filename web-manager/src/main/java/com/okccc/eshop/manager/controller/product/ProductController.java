@@ -60,4 +60,10 @@ public class ProductController {
         return Result.ok();
     }
 
+    @Operation(summary = "根据id删除商品")
+    @DeleteMapping(value = "/{id}")
+    public Result removeById(@PathVariable("id") Long id) {
+        productService.removeById(id);
+        return Result.ok();
+    }
 }
