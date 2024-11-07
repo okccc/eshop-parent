@@ -49,6 +49,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getById(Long id) {
+        // 根据id查询商品基本信息
+        log.info("商品管理 - 根据id查询商品：{}", id);
+        Product product = productMapper.selectById(id);
+
+        // 根据id查询商品sku信息
+        log.info("商品sku管理 - 根据parentId查询商品sku：{}", id);
+        List<ProductSku> productSkuList = productSkuMapper.selectListByProductId(id);
+        product.setProductSkuList(productSkuList);
+
+        // 根据id查询商品详情信息
+        log.info("商品详情管理 - 根据parentId查询商品详情：{}", id);
+        ProductDetail productDetail = productDetailsMapper.selectByProductId(id);
+        product.setDetailsImageUrls(productDetail.getImageUrls());
+
+        // 返回结果
+        return product;
+    }
+
+    @Override
     public void save(Product product) {
         // 保存商品基本信息
         product.setStatus(0);

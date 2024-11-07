@@ -13,6 +13,9 @@ import java.util.List;
 @Mapper
 public interface ProductSkuMapper {
 
+    // 根据productId查询商品sku
+    List<ProductSku> selectListByProductId(Long productId);
+
     // 添加商品sku
     void insert(ProductSku productSku);
 

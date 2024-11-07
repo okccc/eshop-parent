@@ -6,6 +6,11 @@
 <!-- 映射文件负责写crud -->
 <mapper namespace="com.okccc.eshop.manager.mapper.ProductSkuMapper">
 
+    <!-- List<ProductSku> selectListByProductId(Long productId); -->
+    <select id="selectListByProductId" resultType="com.okccc.eshop.model.entity.product.ProductSku">
+        select * from product_sku where product_id = #{productId} and is_deleted = 0
+    </select>
+
     <!-- void insert(ProductSku productSku); -->
     <insert id="insert">
         insert into product_sku (sku_code,sku_name,product_id,thumb_img,sale_price,market_price,cost_price,stock_num,sku_spec,weight,volume,status,sale_num)

@@ -46,6 +46,13 @@ public class ProductController {
         return Result.ok(pageResult);
     }
 
+    @Operation(summary = "根据id查询商品")
+    @GetMapping(value = "/{id}")
+    public Result<Product> getById(@PathVariable("id") Long id) {
+        Product product = productService.getById(id);
+        return Result.ok(product);
+    }
+
     @Operation(summary = "添加商品")
     @PostMapping
     public Result save(@RequestBody Product product) {
