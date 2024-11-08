@@ -73,4 +73,12 @@ public class ProductController {
         productService.removeById(id);
         return Result.ok();
     }
+
+    @Operation(summary = "商品审核")
+    @GetMapping(value = "/updateAuditStatus/{id}/{auditStatus}")
+    public Result updateAuditStatus(@PathVariable("id") Long id, @PathVariable("auditStatus") Integer auditStatus) {
+        // 当点击审核按钮时会需要弹出一个对话框,展示商品详情信息,用户可以点击通过或者驳回按钮对商品进行审核操作
+        productService.updateAuditStatusById(id, auditStatus);
+        return Result.ok();
+    }
 }

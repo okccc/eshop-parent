@@ -25,4 +25,7 @@ public interface ProductService {
 
     // 根据id删除商品
     void removeById(Long id);
+
+    // 修改商品审核状态(1通过,-1未通过)
+    void updateAuditStatusById(Long id, Integer auditStatus);
 }

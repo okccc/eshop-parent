@@ -133,4 +133,19 @@ public class ProductServiceImpl implements ProductService {
         productDetailsMapper.deleteByProductId(id);
     }
 
+    @Override
+    public void updateAuditStatusById(Long id, Integer auditStatus) {
+        Product product = new Product();
+        product.setId(id);
+        if (auditStatus == 1) {
+            product.setAuditStatus(1);
+            product.setAuditMessage("审批通过");
+        } else {
+            product.setAuditStatus(-1);
+            product.setAuditMessage("审批不通过");
+        }
+        log.info("商品管理 - 修改商品审核状态");
+        productMapper.updateById(product);
+    }
+
 }
