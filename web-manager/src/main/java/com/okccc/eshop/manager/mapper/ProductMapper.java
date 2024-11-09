@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.okccc.eshop.model.dto.product.ProductDto;
 import com.okccc.eshop.model.entity.product.Product;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @Author: okccc
@@ -27,4 +28,7 @@ public interface ProductMapper {
 
     // 根据id删除商品
     void deleteById(Long id);
+
+    // 修改商品线上状态
+    void updateStatusById(@Param("id") Long id, @Param("status") Integer status);
 }

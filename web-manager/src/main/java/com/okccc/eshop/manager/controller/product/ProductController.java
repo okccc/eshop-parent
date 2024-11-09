@@ -81,4 +81,12 @@ public class ProductController {
         productService.updateAuditStatusById(id, auditStatus);
         return Result.ok();
     }
+
+    @Operation(summary = "商品上下架")
+    @GetMapping(value = "/updateStatus/{id}/{status}")
+    public Result updateStatus(@PathVariable Long id, @PathVariable Integer status) {
+        productService.updateStatusById(id, status);
+        return Result.ok();
+    }
+
 }

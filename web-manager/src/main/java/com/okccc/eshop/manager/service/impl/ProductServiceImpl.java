@@ -148,4 +148,10 @@ public class ProductServiceImpl implements ProductService {
         productMapper.updateById(product);
     }
 
+    @Override
+    public void updateStatusById(Long id, Integer status) {
+        log.info("商品管理 - 修改商品线上状态");
+        productMapper.updateStatusById(id, status);
+    }
+
 }

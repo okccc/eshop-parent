@@ -28,4 +28,8 @@ public interface ProductService {
 
     // 修改商品审核状态(1通过,-1未通过)
     void updateAuditStatusById(Long id, Integer auditStatus);
+
+    // 修改商品线上状态(1上架,-1下架)
+    void updateStatusById(Long id, Integer status);
+
 }
