@@ -58,6 +58,9 @@ cd vue3-element-admin
 npm install --registry=https://registry.npm.taobao.org
 # 启动服务,打开页面
 npm start
+
+# 安装echarts,订单统计图表展示
+npm install echarts --save
 ```
 
 ## 后台管理系统 - 后台工程搭建
@@ -79,4 +82,11 @@ npm start
 # 提高操作效率：手动逐条添加或修改数据费时费力且容易出错,此时就可以将大量数据从Excel导入到系统中
 # 实现数据备份：可以将系统中的数据导出为Excel,防止数据丢失
 # 方便部门协作：不同部门会使用不同的工具进行数据处理,导入导出Excel方便转换和共享数据
+
+# 订单管理
+# 后台管理系统可以对订单数据进行统计,制定图形化报表用于数据分析
+# Echarts是百度开发的基于JavaScript的开源可视化图表库,提供了丰富的图表类型、数据统计分析、动态数据更新、多维数据展示等功能
+# Echarts支持多种图表类型,如线图、柱状图、饼图、雷达图、散点图等,还支持动态数据显示、图表联动、混搭图表等复杂功能
+# ECharts易于上手,提供了丰富的API以及完善的文档和示例,使得开发人员可以更快速、更便捷地使用它做数据可视化
+# ECharts官网地址：https://echarts.apache.org/zh/index.html
 ```
