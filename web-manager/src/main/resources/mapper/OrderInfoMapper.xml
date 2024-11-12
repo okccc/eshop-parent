@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.manager.mapper.OrderInfoMapper">
+
+    <!-- OrderStatistics statByDate(String statDate); -->
+    <select id="statByDate" resultType="com.okccc.eshop.model.entity.order.OrderStatistics">
+        select
+            DATE_FORMAT(create_time, '%Y-%m-%d') orderDate,
+            sum(total_amount) totalAmount,
+            count(id) totalNum
+        from order_info
+        where DATE_FORMAT(create_time, '%Y-%m-%d') = #{statDate}
+        group by DATE_FORMAT(create_time, '%Y-%m-%d')
+    </select>
+</mapper>
