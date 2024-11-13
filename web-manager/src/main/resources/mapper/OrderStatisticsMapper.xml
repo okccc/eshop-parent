@@ -11,4 +11,19 @@
         insert into order_statistics (order_date,total_amount,total_num)
         values (#{orderDate}, #{totalAmount}, #{totalNum})
     </insert>
+
+    <!-- List<OrderStatistics> selectList(OrderStatisticsDto orderStatisticsDto); -->
+    <select id="selectList" resultType="com.okccc.eshop.model.entity.order.OrderStatistics">
+        select *
+        from order_statistics
+        <where>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and order_date >= #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and order_date &lt;= #{createTimeEnd}
+            </if>
+        </where>
+        order by order_date
+    </select>
 </mapper>
