@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @Author: okccc
  * @Date: 2024/4/22 17:06:12
- * @Desc: 统一处理异常(自动挡)而不是给前端响应Whitelabel Error Page,不用再写try/catch(手动挡)
+ * @Desc: 官网地址 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html
+ *
+ * 统一处理异常(自动挡)而不是给前端响应Whitelabel Error Page,不用再写try/catch(手动挡)
  *
  * 统一处理异常之前：
  * {"status": 500, "error": "Internal Server Error", "path": "/admin/system/login", "timestamp": "2024-04-24T02:33:11"}
@@ -23,10 +25,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     /**
-     * 捕获所有异常,匹配不到具体异常时才会走这里(兜底)
+     * 捕获所有异常,匹配不到具体异常时就会走到这里
      */
     @ExceptionHandler(value = Exception.class)
-    public Result<String> error(Exception e) {
+    public Result<String> handle(Exception e) {
         // 记录异常信息
         log.error(e.getMessage(), e);
         // 给前端响应结果
@@ -37,8 +39,8 @@ public class GlobalExceptionHandler {
      * 捕获指定异常,优先级更高
      */
     @ExceptionHandler(value = MyRuntimeException.class)
-    public Result<String> error(MyRuntimeException e) {
-        // 记录异常信息,e是完整的错误日志,e.getMessage()是":"后面那一小截
+    public Result<String> handle(MyRuntimeException e) {
+        // 记录异常信息
         log.error(e.getMessage(), e);
         // 给前端响应结果
         return Result.fail(e.getResultCodeEnum());

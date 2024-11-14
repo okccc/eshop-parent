@@ -14,9 +14,16 @@ import lombok.Getter;
 @Getter
 public class MyRuntimeException extends RuntimeException {
 
+    private final Integer code;
+
+    private final String message;
+
     private final ResultCodeEnum resultCodeEnum;
 
     public MyRuntimeException(ResultCodeEnum resultCodeEnum) {
         this.resultCodeEnum = resultCodeEnum;
+        this.code = resultCodeEnum.getCode();
+        this.message = resultCodeEnum.getMessage();
     }
+
 }
