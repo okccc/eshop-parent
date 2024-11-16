@@ -102,4 +102,9 @@ npm install echarts --save
 # 正向代理：代理的是客户端,proxy和client同属一个LAN,代表客户端发送请求,隐藏客户端地址 --> 翻墙、爬虫
 # 反向代理：代理的是服务器,proxy和server同属一个LAN,代表服务器响应结果,隐藏服务器地址 --> 负载均衡
 # 负载均衡：集群模式下,nginx根据策略(轮询/权重/哈希)将请求发送给不同的后端服务器,减轻每台服务器压力,提高吞吐量
+
+# 本地部署
+# brew install nginx
+# 先清空/usr/local/Cellar/nginx/1.25.5/html,然后将资料中h5目录下的static和index.html拷贝进来
+# 启动nginx - 打开页面 http://localhost:8080 - F12调成手机模式
 ```
