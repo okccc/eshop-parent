@@ -1,0 +1,23 @@
+# server
+server:
+  port: 8511
+
+# spring
+spring:
+  # mysql
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eshop?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Q-D37Sq*k61#yT_y
+  # redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# mybatis
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml

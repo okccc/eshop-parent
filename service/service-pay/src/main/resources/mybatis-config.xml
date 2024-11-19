@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 全局配置,所有配置项都在org.apache.ibatis.session.Configuration类中 -->
+    <settings>
+        <!-- 日志实现,SLF4J/LOG4J2/STDOUT_LOGGING -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 将下划线映射成驼峰规则 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 设置映射范围,NONE/PARTIAL/FULL -->
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <!-- 开启延迟加载,需要啥就查啥而不是一次性全部查出来,可以对比DEBUG信息执行的sql条数 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 开启缓存,可以对比DEBUG信息执行的sql次数 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- 分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+        </plugin>
+    </plugins>
+</configuration>

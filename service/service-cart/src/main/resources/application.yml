@@ -1,0 +1,11 @@
+# server
+server:
+  port: 8513
+
+# spring
+spring:
+  # redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
