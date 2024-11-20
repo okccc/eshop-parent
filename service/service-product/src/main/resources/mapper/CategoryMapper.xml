@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.product.mapper.CategoryMapper">
+
+    <sql id="columns">
+        id,name,image_url,parent_id,status,order_num,create_time,update_time,is_deleted
+    </sql>
+
+    <!-- List<Category> selectOneCategory(); -->
+    <select id="selectOneCategory" resultType="com.okccc.eshop.model.entity.product.Category">
+        select * from category where parent_id = 0 and status = 1 and is_deleted = 0
+    </select>
+</mapper>
