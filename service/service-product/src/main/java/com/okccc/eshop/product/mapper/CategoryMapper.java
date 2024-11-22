@@ -16,4 +16,7 @@ public interface CategoryMapper {
     // 查询一级分类
     List<Category> selectOneCategory();
 
+    // 查询所有分类
+    List<Category> selectList();
+
 }

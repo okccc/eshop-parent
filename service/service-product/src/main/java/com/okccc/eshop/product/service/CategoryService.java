@@ -14,4 +14,7 @@ public interface CategoryService {
     // 查询一级分类
     List<Category> getOneCategory();
 
+    // 查询所有分类,树形结构
+    List<Category> getCategoryTree();
+
 }

@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +50,51 @@ public class CategoryServiceImpl implements CategoryService {
 
         // 3.返回查询结果
         return categoryList;
+    }
+
+    @Override
+    public List<Category> getCategoryTree() {
+        // 1.查询所有分类
+        log.info("分类管理 - 从mysql数据库查询所有分类");
+        List<Category> categoryList = categoryMapper.selectList();
+
+        // 2.遍历所有分类,构建树形结构
+        ArrayList<Category> oneCategoryList = new ArrayList<>();
+        for (Category category : categoryList) {
+            // 判断该分类是否是一级分类
+            if (category.getParentId() == 0) {
+                oneCategoryList.add(category);
+            }
+        }
+
+        // 遍历一级分类
+        for (Category oneCategory : oneCategoryList) {
+            ArrayList<Category> twoCategoryList = new ArrayList<>();
+            for (Category category : categoryList) {
+                // 判断该一级分类下是否有二级分类
+                if (category.getParentId().longValue() == oneCategory.getId().longValue()) {
+                    twoCategoryList.add(category);
+                }
+            }
+            // 将二级分类封装到一级分类里面
+            oneCategory.setChildren(twoCategoryList);
+
+            // 遍历二级分类
+            for (Category twoCategory : twoCategoryList) {
+                ArrayList<Category> threeCategoryList = new ArrayList<>();
+                for (Category category : categoryList) {
+                    // 判断该二级分类下是否有三级分类
+                    if (category.getParentId().longValue() == twoCategory.getId().longValue()) {
+                        threeCategoryList.add(category);
+                    }
+                }
+                // 将三级分类封装到二级分类里面
+                twoCategory.setChildren(threeCategoryList);
+            }
+        }
+
+        // 3.返回一级分类树形图
+        return oneCategoryList;
     }
 
 }

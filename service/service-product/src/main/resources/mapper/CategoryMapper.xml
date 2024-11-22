@@ -14,4 +14,9 @@
     <select id="selectOneCategory" resultType="com.okccc.eshop.model.entity.product.Category">
         select * from category where parent_id = 0 and status = 1 and is_deleted = 0
     </select>
+
+    <!-- List<Category> selectList(); -->
+    <select id="selectList" resultType="com.okccc.eshop.model.entity.product.Category">
+        select * from category where status = 1 and is_deleted = 0
+    </select>
 </mapper>
