@@ -7,6 +7,7 @@ import com.okccc.eshop.product.mapper.CategoryMapper;
 import com.okccc.eshop.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -52,6 +53,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryList;
     }
 
+    /**
+     * 查询所有分类：演示SpringCache实现缓存功能
+     */
+    @Cacheable(cacheNames = "category", key = "'all'")  // category::all
     @Override
     public List<Category> getCategoryTree() {
         // 1.查询所有分类
