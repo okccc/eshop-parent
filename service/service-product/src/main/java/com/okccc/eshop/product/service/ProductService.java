@@ -1,5 +1,7 @@
 package com.okccc.eshop.product.service;
 
+import com.github.pagehelper.PageInfo;
+import com.okccc.eshop.model.dto.h5.ProductSkuDto;
 import com.okccc.eshop.model.entity.product.ProductSku;
 
 import java.util.List;
@@ -13,4 +15,7 @@ public interface ProductService {
 
     // 查询畅销商品列表
     List<ProductSku> getProductSkuBySale();
+
+    // 分页查询,带搜索条件
+    PageInfo<ProductSku> page(Integer pageNum, Integer pageSize, ProductSkuDto productSkuDto);
 }
