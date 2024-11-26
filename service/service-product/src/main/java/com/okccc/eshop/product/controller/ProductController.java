@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.common.result.Result;
 import com.okccc.eshop.model.dto.h5.ProductSkuDto;
 import com.okccc.eshop.model.entity.product.ProductSku;
+import com.okccc.eshop.model.vo.h5.ProductItemVo;
 import com.okccc.eshop.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,5 +30,13 @@ public class ProductController {
         // 进入商品列表的入口：首页一级分类、首页关键字搜索、分类频道三级分类、首页畅销商品
         PageInfo<ProductSku> pageInfo = productService.page(pageNum, pageSize, productSkuDto);
         return Result.ok(pageInfo);
+    }
+
+    @Operation(summary = "根据skuId查询商品详情")
+    @GetMapping(value = "/item/{skuId}")
+    public Result<ProductItemVo> getById(@PathVariable("skuId") Long skuId) {
+        // 商品详情包含：商品基本信息、商品sku信息、轮播图信息、商品规格等
+        ProductItemVo productItemVo = productService.getById(skuId);
+        return Result.ok(productItemVo);
     }
 }

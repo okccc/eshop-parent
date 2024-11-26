@@ -47,4 +47,14 @@
             order by sku.sale_price desc
         </if>
     </select>
+
+    <!-- ProductSku selectById(Long id); -->
+    <select id="selectById" resultType="com.okccc.eshop.model.entity.product.ProductSku">
+        select * from product_sku where id = #{id}
+    </select>
+
+    <!-- List<ProductSku> selectByProductId(Long productId); -->
+    <select id="selectByProductId" resultType="com.okccc.eshop.model.entity.product.ProductSku">
+        select * from product_sku where product_id = #{productId}
+    </select>
 </mapper>

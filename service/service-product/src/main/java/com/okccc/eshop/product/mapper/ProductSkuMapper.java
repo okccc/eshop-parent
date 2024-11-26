@@ -19,4 +19,10 @@ public interface ProductSkuMapper {
 
     // 分页查询,带搜索条件
     List<ProductSku> selectPage(ProductSkuDto productSkuDto);
+
+    // 根据id查询商品sku
+    ProductSku selectById(Long id);
+
+    // 根据productId查询商品sku
+    List<ProductSku> selectByProductId(Long productId);
 }
