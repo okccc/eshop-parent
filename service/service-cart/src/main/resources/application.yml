@@ -4,6 +4,14 @@ server:
 
 # spring
 spring:
+  # 服务名称
+  application:
+    name: service-cart
+  cloud:
+    # nacos
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   # redis
   data:
     redis:

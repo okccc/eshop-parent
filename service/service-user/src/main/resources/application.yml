@@ -4,6 +4,14 @@ server:
 
 # spring
 spring:
+  # 服务名称
+  application:
+    name: service-user
+  # nacos
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   # mysql
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

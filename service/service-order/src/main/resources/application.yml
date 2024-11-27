@@ -3,6 +3,14 @@ server:
   port: 8514
 
 spring:
+  # 微服务名称
+  application:
+    name: service-order
+  cloud:
+    # nacos
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   # mysql
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
