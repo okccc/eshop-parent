@@ -12,6 +12,10 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+    # openfeign
+    openfeign:
+      okhttp:
+        enabled: true
   # redis
   data:
     redis:
