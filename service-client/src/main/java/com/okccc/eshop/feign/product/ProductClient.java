@@ -1,5 +1,6 @@
 package com.okccc.eshop.feign.product;
 
+import com.okccc.eshop.config.FeignConfig;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Date: 2024/6/28 16:55:59
  * @Desc: 远程调用的三个关键点：服务名称、请求方式和请求路径、请求参数和返回值类型
  */
-@FeignClient(value = "service-product")  // 1.服务名称
-public interface ProductFeignClient {
+@FeignClient(value = "service-product", configuration = FeignConfig.class)  // 1.服务名称
+public interface ProductClient {
 
     @Operation(summary = "根据skuId查询sku信息")
     @GetMapping(value = "/api/product/getBySkuId/{skuId}")  // 2.请求方式和请求路径
