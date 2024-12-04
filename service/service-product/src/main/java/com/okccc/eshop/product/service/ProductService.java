@@ -22,4 +22,7 @@ public interface ProductService {
 
     // 查询商品详情
     ProductItemVo getById(Long skuId);
+
+    // 查询商品sku信息
+    ProductSku getBySkuId(Long skuId);
 }

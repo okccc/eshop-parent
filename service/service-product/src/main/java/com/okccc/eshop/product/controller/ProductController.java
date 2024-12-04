@@ -39,4 +39,11 @@ public class ProductController {
         ProductItemVo productItemVo = productService.getById(skuId);
         return Result.ok(productItemVo);
     }
+
+    @Operation(summary = "根据skuId查询sku信息")
+    @GetMapping(value = "/getBySkuId/{skuId}")
+    public ProductSku getBySkuId(@PathVariable("skuId") Long skuId) {
+        // 远程调用：购物车模块需要根据skuId查询sku信息,不是前端请求所以不需要返回Result
+        return productService.getBySkuId(skuId);
+    }
 }

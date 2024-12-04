@@ -2,7 +2,7 @@ package com.okccc.eshop.cart.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.okccc.eshop.cart.service.CartService;
-import com.okccc.eshop.feign.product.ProductFeignClient;
+import com.okccc.eshop.feign.product.ProductClient;
 import com.okccc.eshop.model.entity.h5.CartInfo;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +33,16 @@ public class CartServiceImpl implements CartService {
     private DiscoveryClient discoveryClient;
 
     @Autowired
-    private ProductFeignClient productFeignClient;
+    private ProductClient productClient;
+
+    public String getCartKey() {
+        return "user:cart:1";
+    }
 
     @Override
     public void save(Long skuId, Integer skuNum) {
         // 获取购物车的key
-        String cartKey = "user:cart:1";
+        String cartKey = getCartKey();
 
         // 根据key和field获取指定商品
         log.info("购物车微服务 - 根据key和field获取指定商品：{},{}", cartKey, skuId);
@@ -79,7 +83,7 @@ public class CartServiceImpl implements CartService {
             // 远程调用的三个关键点：服务名称、请求方式和路径、请求参数和返回值类型
             // OpenFeign就是利用SpringMVC的相关注解来声明上述信息,然后基于动态代理生成远程调用的代码
             // OpenFeign替我们完成了服务订阅、负载均衡、发送http请求等所有工作,看起来优雅多了
-            ProductSku productSku = productFeignClient.getBySkuId(skuId);
+            ProductSku productSku = productClient.getBySkuId(skuId);
 
             // 填充购物车相关信息
             cartInfo.setUserId(1L);
