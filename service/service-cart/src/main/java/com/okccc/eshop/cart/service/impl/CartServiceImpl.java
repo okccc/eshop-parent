@@ -3,6 +3,7 @@ package com.okccc.eshop.cart.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.okccc.eshop.cart.service.CartService;
 import com.okccc.eshop.feign.product.ProductClient;
+import com.okccc.eshop.model.entity.base.BaseEntity;
 import com.okccc.eshop.model.entity.h5.CartInfo;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: okccc
@@ -106,6 +110,29 @@ public class CartServiceImpl implements CartService {
         // 将商品数据添加到购物车中
         log.info("购物车微服务 - 根据key和field添加商品：{},{}", cartKey, skuId);
         redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId), JSON.toJSONString(cartInfo));
+    }
+
+    @Override
+    public List<CartInfo> list() {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key获取所有商品
+        log.info("购物车微服务 - 根据key获取所有商品：{}", cartKey);
+        List<Object> values = redisTemplate.opsForHash().values(cartKey);
+
+        // 购物车列表
+        List<CartInfo> cartInfoList = new ArrayList<>();
+        for (Object value : values) {
+            CartInfo cartInfo = JSON.parseObject(value.toString(), CartInfo.class);
+            cartInfoList.add(cartInfo);
+        }
+
+        // 按照创建时间排序
+        cartInfoList.sort(Comparator.comparing(BaseEntity::getCreateTime));
+
+        // 返回结果
+        return cartInfoList;
     }
 
 }
