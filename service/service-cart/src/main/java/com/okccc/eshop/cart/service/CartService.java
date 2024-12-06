@@ -16,4 +16,7 @@ public interface CartService {
 
     // 查询购物车商品列表
     List<CartInfo> list();
+
+    // 更新指定商品的选中状态
+    void updateBySkuId(Long skuId, Integer isChecked);
 }

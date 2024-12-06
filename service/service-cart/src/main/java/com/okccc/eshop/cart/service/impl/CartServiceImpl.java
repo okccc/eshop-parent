@@ -135,4 +135,24 @@ public class CartServiceImpl implements CartService {
         return cartInfoList;
     }
 
+    @Override
+    public void updateBySkuId(Long skuId, Integer isChecked) {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key和field获取指定商品
+        log.info("购物车微服务 - 根据key和field获取指定商品：{},{}", cartKey, skuId);
+        Object value = redisTemplate.opsForHash().get(cartKey, String.valueOf(skuId));
+
+        // 转换成CartInfo对象
+        CartInfo cartInfo = JSON.parseObject(value.toString(), CartInfo.class);
+
+        // 修改商品的选中状态
+        cartInfo.setIsChecked(isChecked);
+
+        // 将修改后的CartInfo再放回redis
+        log.info("购物车微服务 - 根据key和field更新指定商品：{},{}", cartKey, skuId);
+        redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId) ,JSON.toJSONString(cartInfo));
+    }
+
 }

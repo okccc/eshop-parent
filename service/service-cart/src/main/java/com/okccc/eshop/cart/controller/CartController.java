@@ -36,4 +36,11 @@ public class CartController {
         List<CartInfo> list = cartService.list();
         return Result.ok(list);
     }
+
+    @Operation(summary = "更新指定商品的选中状态(1选中,0取消)")
+    @GetMapping(value = "/auth/checkCart/{skuId}/{isChecked}")
+    public Result updateBySkuId(@PathVariable(value = "skuId") Long skuId, @PathVariable(value = "isChecked") Integer isChecked) {
+        cartService.updateBySkuId(skuId, isChecked);
+        return Result.ok();
+    }
 }
