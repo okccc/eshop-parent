@@ -19,4 +19,7 @@ public interface CartService {
 
     // 更新指定商品的选中状态
     void updateBySkuId(Long skuId, Integer isChecked);
+
+    // 更新所有商品的选中状态
+    void updateAll(Integer isChecked);
 }

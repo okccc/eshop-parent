@@ -43,4 +43,11 @@ public class CartController {
         cartService.updateBySkuId(skuId, isChecked);
         return Result.ok();
     }
+
+    @Operation(summary = "更新所有商品的选中状态(1选中,0取消)")
+    @GetMapping(value = "/auth/allCheckCart/{isChecked}")
+    public Result updateAll(@PathVariable(value = "isChecked") Integer isChecked){
+        cartService.updateAll(isChecked);
+        return Result.ok();
+    }
 }

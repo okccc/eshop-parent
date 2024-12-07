@@ -155,4 +155,27 @@ public class CartServiceImpl implements CartService {
         redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId) ,JSON.toJSONString(cartInfo));
     }
 
+    @Override
+    public void updateAll(Integer isChecked) {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key获取所有商品
+        log.info("购物车微服务 - 根据key获取所有商品：{}", cartKey);
+        List<Object> values = redisTemplate.opsForHash().values(cartKey);
+
+        // 遍历列表
+        for (Object value : values) {
+            // 转换成CartInfo对象
+            CartInfo cartInfo = JSON.parseObject(value.toString(), CartInfo.class);
+
+            // 修改商品的选中状态
+            cartInfo.setIsChecked(isChecked);
+
+            // 将修改后的CartInfo再放回redis
+            log.info("购物车微服务 - 根据key和field更新指定商品：{},{}", cartKey, cartInfo.getSkuId());
+            redisTemplate.opsForHash().put(cartKey, String.valueOf(cartInfo.getSkuId()), JSON.toJSONString(cartInfo));
+        }
+    }
+
 }
