@@ -50,4 +50,11 @@ public class CartController {
         cartService.updateAll(isChecked);
         return Result.ok();
     }
+
+    @Operation(summary = "删除指定商品")
+    @DeleteMapping(value = "/auth/deleteCart/{skuId}")
+    public Result removeBySkuId(@PathVariable("skuId") Long skuId) {
+        cartService.removeBySkuId(skuId);
+        return Result.ok();
+    }
 }

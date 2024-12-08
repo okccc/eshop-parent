@@ -22,4 +22,7 @@ public interface CartService {
 
     // 更新所有商品的选中状态
     void updateAll(Integer isChecked);
+
+    // 删除指定商品
+    void removeBySkuId(Long skuId);
 }

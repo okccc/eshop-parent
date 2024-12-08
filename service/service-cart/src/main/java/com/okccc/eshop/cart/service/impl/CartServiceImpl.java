@@ -178,4 +178,14 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    @Override
+    public void removeBySkuId(Long skuId) {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key和field删除指定商品
+        log.info("购物车微服务 - 根据key和field删除指定商品：{},{}", cartKey, skuId);
+        redisTemplate.opsForHash().delete(cartKey, String.valueOf(skuId));
+    }
+
 }
