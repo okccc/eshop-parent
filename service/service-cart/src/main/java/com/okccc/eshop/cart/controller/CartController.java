@@ -57,4 +57,11 @@ public class CartController {
         cartService.removeBySkuId(skuId);
         return Result.ok();
     }
+
+    @Operation(summary = "删除所有商品(清空购物车)")
+    @GetMapping(value = "/auth/clearCart")
+    public Result removeAll() {
+        cartService.removeAll();
+        return Result.ok();
+    }
 }

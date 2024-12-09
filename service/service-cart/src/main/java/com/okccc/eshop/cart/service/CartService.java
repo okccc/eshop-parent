@@ -25,4 +25,7 @@ public interface CartService {
 
     // 删除指定商品
     void removeBySkuId(Long skuId);
+
+    // 删除所有商品(清空购物车)
+    void removeAll();
 }
