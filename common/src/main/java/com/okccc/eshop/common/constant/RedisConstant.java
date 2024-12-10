@@ -12,4 +12,7 @@ public class RedisConstant {
 
     // 商品微服务：一级分类数据存活时间(天)
     public static final Integer CATEGORY_ONE_TTL = 7;
+
+    // APP端：短信验证码存活时间(秒)
+    public static final Integer APP_SMS_TTL_SEC = 60;
 }
