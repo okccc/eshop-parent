@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.user.mapper.UserInfoMapper">
+
+    <!-- UserInfo selectByUsername(String username); -->
+    <select id="selectByUsername" resultType="com.okccc.eshop.model.entity.user.UserInfo">
+        select * from user_info where username = #{username}
+    </select>
+
+    <!-- void insert(UserInfo userInfo); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into user_info (username,password,nick_name,avatar,sex,phone,memo,open_id,union_id,last_login_ip,last_login_time,status)
+        values (#{username}, #{password}, #{nickName}, #{avatar}, #{sex}, #{phone}, #{memo}, #{openId}, #{unionId}, #{lastLoginIp}, #{lastLoginTime}, #{status} )
+    </insert>
+</mapper>
