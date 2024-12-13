@@ -1,12 +1,13 @@
 package com.okccc.eshop.manager.service.impl;
 
-import cn.hutool.captcha.*;
-import com.alibaba.fastjson2.JSON;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.okccc.eshop.manager.constant.RedisConstant;
 import com.okccc.eshop.manager.handler.MyRuntimeException;
-import com.okccc.eshop.manager.result.ResultCodeEnum;
 import com.okccc.eshop.manager.mapper.SysUserMapper;
+import com.okccc.eshop.manager.result.ResultCodeEnum;
 import com.okccc.eshop.manager.service.LoginService;
+import com.okccc.eshop.manager.util.JwtUtil;
 import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.entity.system.SysUser;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
@@ -95,10 +96,12 @@ public class LoginServiceImpl implements LoginService {
             throw new MyRuntimeException(ResultCodeEnum.ACCOUNT_DISABLED_ERROR);
         }
 
-        // 3.登录成功,生成token保存到redis并设置有效期
-        // 前端将token存储在localStorage(5M),比cookie(4K)容量更大,后续发送请求时就会在请求头携带该token
-        String token = RedisConstant.LOGIN_PREFIX + UUID.randomUUID();
-        redisTemplate.opsForValue().set(token, JSON.toJSONString(sysUser), RedisConstant.LOGIN_TTL_DAY, TimeUnit.DAYS);
+        // 3.登录成功生成token,前端将token存储在localStorage(5M),比cookie(4K)容量更大,后续发送请求时就会在请求头携带该token
+        // 简洁版：直接拼接固定前缀加UUID作为token,保存到redis并设置有效期
+//        String token = RedisConstant.LOGIN_PREFIX + UUID.randomUUID();
+//        redisTemplate.opsForValue().set(token, sysUser.getId().toString(), RedisConstant.LOGIN_TTL_DAY, TimeUnit.DAYS);
+        // 专业版：使用JWT生成token,登录校验时也是由JWT解析token,不需要存redis
+        String token = JwtUtil.createToken(sysUser.getId());
 
         // 4.返回token
         return new LoginVo(token);

@@ -1,7 +1,5 @@
 package com.okccc.eshop.manager.util;
 
-import com.okccc.eshop.model.entity.system.SysUser;
-
 /**
  * @Author: okccc
  * @Date: 2024/7/1 16:39:34
@@ -17,21 +15,21 @@ import com.okccc.eshop.model.entity.system.SysUser;
  */
 public class ThreadLocalUtil {
 
-    // 创建存储SysUser的ThreadLocal对象
-    private static final ThreadLocal<SysUser> threadLocal = new ThreadLocal<>();
+    // 创建ThreadLocal对象
+    private static final ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
     // 存储数据
-    public static void setSysUser(SysUser sysUser) {
-        threadLocal.set(sysUser);
+    public static void setUser(Long userId) {
+        threadLocal.set(userId);
     }
 
     // 获取数据
-    public static SysUser getSysUser() {
+    public static Long getUser() {
         return threadLocal.get();
     }
 
     // 删除数据
-    public static void removeSysUser() {
+    public static void removeUser() {
         threadLocal.remove();
     }
 
