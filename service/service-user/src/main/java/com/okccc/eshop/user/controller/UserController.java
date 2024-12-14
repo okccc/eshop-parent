@@ -1,6 +1,7 @@
 package com.okccc.eshop.user.controller;
 
 import com.okccc.eshop.common.result.Result;
+import com.okccc.eshop.model.dto.h5.UserLoginDto;
 import com.okccc.eshop.model.dto.h5.UserRegisterDto;
 import com.okccc.eshop.user.service.SmsService;
 import com.okccc.eshop.user.service.UserService;
@@ -39,4 +40,10 @@ public class UserController {
         return Result.ok();
     }
 
+    @Operation(summary = "登录")
+    @PostMapping(value = "/userInfo/login")
+    public Result<String> login(@RequestBody UserLoginDto userLoginDto) {
+        String token = userService.login(userLoginDto);
+        return Result.ok(token);
+    }
 }

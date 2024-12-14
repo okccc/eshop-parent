@@ -15,4 +15,10 @@ public class RedisConstant {
 
     // APP端：短信验证码存活时间(秒)
     public static final Integer APP_SMS_TTL_SEC = 60;
+
+    // APP端：登录token前缀
+    public static final String APP_LOGIN_PREFIX = "user:login:";
+
+    // APP端：登录token存活时间(天)
+    public static final Integer APP_LOGIN_TTL_DAY = 7;
 }
