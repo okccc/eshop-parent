@@ -14,6 +14,13 @@ import java.util.Date;
  * @Author: okccc
  * @Date: 2024/8/3 15:54:44
  * @Desc: JWT工具生成和解析token,会被service-user模块和service-gateway模块使用
+ *
+ * Caused by: io.jsonwebtoken.security.WeakKeyException:
+ * The specified key byte array is 64 bits which is not secure enough for any JWT HMAC-SHA algorithm.
+ * The JWT JWA Specification states that keys used with HMAC-SHA algorithms MUST have a size >= 256 bits
+ *
+ * jwt要求密钥长度>=256bits,也就是32byte
+ * 随机密码生成器：http://mima.wiicha.com/?cate=123&length=32&num=1&spaciel=&exclude_str=
  */
 public class JwtUtil {
 
