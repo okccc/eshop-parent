@@ -1,0 +1,64 @@
+# server
+server:
+  port: 8500
+
+# spring
+spring:
+  # 微服务名称
+  application:
+    name: service-gateway
+  # 微服务配置
+  cloud:
+    # nacos
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    # gateway
+    gateway:
+      # 路由发现：去nacos中找到对应的服务,进行接口调用
+      discovery:
+        locator:
+          enabled: true
+      # 在网关中统一解决跨域问题
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            # 允许的请求头
+            allowedHeaders: "*"
+            # 允许的请求方式
+            allowedMethods: "*"
+            # 跨域检测的有效期(秒)
+            maxAge: 36000
+      # 路由,lb是负载均衡
+      routes:
+        # service-product模块
+        - id: service-product        # 微服务名称,也是唯一标识
+          uri: lb://service-product  # 微服务地址,lb表示负载均衡,从注册中心的多个实例列表选择一个访问
+          predicates:                # 微服务路径,通过正则表达式匹配
+            - Path=/*/product/**
+        # service-user模块
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/user/**
+        # service-cart模块
+        - id: service-cart
+          uri: lb://service-cart
+          predicates:
+            - Path=/api/order/cart/**
+        # service-order模块
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/api/order/orderInfo/**
+        # service-pay模块
+        - id: service-pay
+          uri: lb://service-pay
+          predicates:
+            - Path=/api/order/alipay/**
+  # redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
