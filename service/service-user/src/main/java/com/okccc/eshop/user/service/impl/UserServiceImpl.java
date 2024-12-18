@@ -1,6 +1,5 @@
 package com.okccc.eshop.user.service.impl;
 
-import com.okccc.eshop.common.constant.RedisConstant;
 import com.okccc.eshop.common.handler.MyRuntimeException;
 import com.okccc.eshop.common.result.ResultCodeEnum;
 import com.okccc.eshop.common.util.JwtUtil;
@@ -15,8 +14,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
-
-import java.util.UUID;
 
 /**
  * @Author: okccc
@@ -110,15 +107,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 3.登录成功生成token,前端将token存储在localStorage(5M),比cookie(4K)容量更大,后续发送请求时就会在请求头携带该token
-        // 简洁版：直接拼接固定前缀加UUID作为token,保存到redis并设置有效期
-//        String token = RedisConstant.APP_LOGIN_PREFIX + UUID.randomUUID();
-//        redisTemplate.opsForValue().set(token, userInfo.getId().toString(), RedisConstant.APP_LOGIN_TTL_DAY, TimeUnit.DAYS);
-
-        // 专业版：使用JWT生成token,登录校验时也是由JWT解析token,不需要存redis
-        String token = JwtUtil.createToken(userInfo.getId());
-
-        // 4.返回token
-        return token;
+        return JwtUtil.createToken(userInfo.getId());
     }
 
 }
