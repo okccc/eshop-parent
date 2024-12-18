@@ -18,6 +18,19 @@
     </properties>
 
     <dependencies>
+        <!-- common模块 -->
+        <dependency>
+            <groupId>com.okccc</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- gateway网关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -34,12 +47,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
-        </dependency>
-
-        <!-- redis启动器 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
