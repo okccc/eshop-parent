@@ -1,0 +1,2 @@
+com.okccc.eshop.common.config.WebMvcConfig
+com.okccc.eshop.common.interceptor.AuthInterceptor
