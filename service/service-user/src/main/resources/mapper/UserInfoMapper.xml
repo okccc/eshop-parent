@@ -14,6 +14,11 @@
     <!-- void insert(UserInfo userInfo); -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into user_info (username,password,nick_name,avatar,sex,phone,memo,open_id,union_id,last_login_ip,last_login_time,status)
-        values (#{username}, #{password}, #{nickName}, #{avatar}, #{sex}, #{phone}, #{memo}, #{openId}, #{unionId}, #{lastLoginIp}, #{lastLoginTime}, #{status} )
+        values ( #{username}, #{password}, #{nickName}, #{avatar}, #{sex}, #{phone}, #{memo}, #{openId}, #{unionId}, #{lastLoginIp}, #{lastLoginTime}, #{status})
     </insert>
+
+    <!-- UserInfo selectById(Long id); -->
+    <select id="selectById" resultType="com.okccc.eshop.model.entity.user.UserInfo">
+        select * from user_info where id = #{id}
+    </select>
 </mapper>

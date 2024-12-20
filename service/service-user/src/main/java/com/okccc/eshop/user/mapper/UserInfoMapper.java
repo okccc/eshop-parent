@@ -17,4 +17,6 @@ public interface UserInfoMapper {
     // 添加
     void insert(UserInfo userInfo);
 
+    // 根据id查询用户
+    UserInfo selectById(Long id);
 }

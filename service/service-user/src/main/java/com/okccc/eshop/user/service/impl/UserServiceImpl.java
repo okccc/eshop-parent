@@ -110,4 +110,10 @@ public class UserServiceImpl implements UserService {
         return JwtUtil.createToken(userInfo.getId());
     }
 
+    @Override
+    public UserInfo getById(Long userId) {
+        log.info("根据id查询用户：{}", userId);
+        return userInfoMapper.selectById(userId);
+    }
+
 }

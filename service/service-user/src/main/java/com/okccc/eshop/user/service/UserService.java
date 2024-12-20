@@ -2,6 +2,7 @@ package com.okccc.eshop.user.service;
 
 import com.okccc.eshop.model.dto.h5.UserLoginDto;
 import com.okccc.eshop.model.dto.h5.UserRegisterDto;
+import com.okccc.eshop.model.entity.user.UserInfo;
 
 /**
  * @Author: okccc
@@ -15,4 +16,7 @@ public interface UserService {
 
     // 登录
     String login(UserLoginDto userLoginDto);
+
+    // 根据id查询用户
+    UserInfo getById(Long userId);
 }

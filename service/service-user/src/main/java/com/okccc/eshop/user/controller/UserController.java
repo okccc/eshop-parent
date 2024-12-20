@@ -1,12 +1,16 @@
 package com.okccc.eshop.user.controller;
 
 import com.okccc.eshop.common.result.Result;
+import com.okccc.eshop.common.util.ThreadLocalUtil;
 import com.okccc.eshop.model.dto.h5.UserLoginDto;
 import com.okccc.eshop.model.dto.h5.UserRegisterDto;
+import com.okccc.eshop.model.entity.user.UserInfo;
+import com.okccc.eshop.model.vo.h5.UserInfoVo;
 import com.okccc.eshop.user.service.SmsService;
 import com.okccc.eshop.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,4 +50,16 @@ public class UserController {
         String token = userService.login(userLoginDto);
         return Result.ok(token);
     }
+
+    @Operation(summary = "获取登录用户信息")
+    @GetMapping(value = "/userInfo/auth/getCurrentUserInfo")
+    public Result<UserInfoVo> getCurrentUserInfo() {
+        // 优化：登录校验时已经根据token获取登录用户信息,直接从ThreadLocal获取即可
+        Long userId = ThreadLocalUtil.getUser();
+        UserInfo userInfo = userService.getById(userId);
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfo, userInfoVo);
+        return Result.ok(userInfoVo);
+    }
+
 }
