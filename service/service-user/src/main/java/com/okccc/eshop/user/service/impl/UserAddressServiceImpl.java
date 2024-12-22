@@ -27,4 +27,9 @@ public class UserAddressServiceImpl implements UserAddressService {
         return userAddressMapper.selectListByUserId(userId);
     }
 
+    @Override
+    public UserAddress getById(Long id) {
+        log.info("用户微服务 - 根据id查询用户地址：{}", id);
+        return userAddressMapper.selectById(id);
+    }
 }

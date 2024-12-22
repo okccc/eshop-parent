@@ -10,4 +10,9 @@
     <select id="selectListByUserId" resultType="com.okccc.eshop.model.entity.user.UserAddress">
         select * from user_address where user_id = #{userId}
     </select>
+
+    <!-- UserAddress selectById(Long id); -->
+    <select id="selectById" resultType="com.okccc.eshop.model.entity.user.UserAddress">
+        select * from user_address where id = #{id}
+    </select>
 </mapper>

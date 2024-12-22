@@ -15,4 +15,7 @@ public interface UserAddressMapper {
 
     // 根据userId查询用户地址列表
     List<UserAddress> selectListByUserId(Long userId);
+
+    // 根据id查询用户地址
+    UserAddress selectById(Long id);
 }
