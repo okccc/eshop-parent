@@ -2,7 +2,8 @@ package com.okccc.eshop.cart.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.okccc.eshop.cart.service.CartService;
-import com.okccc.eshop.feign.product.ProductClient;
+import com.okccc.eshop.common.util.ThreadLocalUtil;
+import com.okccc.eshop.client.feign.ProductFeignClient;
 import com.okccc.eshop.model.entity.base.BaseEntity;
 import com.okccc.eshop.model.entity.h5.CartInfo;
 import com.okccc.eshop.model.entity.product.ProductSku;
@@ -37,10 +38,14 @@ public class CartServiceImpl implements CartService {
     private DiscoveryClient discoveryClient;
 
     @Autowired
-    private ProductClient productClient;
+    private ProductFeignClient productFeignClient;
 
     public String getCartKey() {
-        return "user:cart:1";
+        // 购物车功能必须是登录状态,直接从ThreadLocal获取当前登录用户信息
+        Long userId = ThreadLocalUtil.getUser();
+
+        // 拼接购物车的key,购物车使用hash结构存储 key=user:cart:{userId}, field=skuId, value=CartInfo
+        return "user:cart:" + userId;
     }
 
     @Override
@@ -87,10 +92,11 @@ public class CartServiceImpl implements CartService {
             // 远程调用的三个关键点：服务名称、请求方式和路径、请求参数和返回值类型
             // OpenFeign就是利用SpringMVC的相关注解来声明上述信息,然后基于动态代理生成远程调用的代码
             // OpenFeign替我们完成了服务订阅、负载均衡、发送http请求等所有工作,看起来优雅多了
-            ProductSku productSku = productClient.getBySkuId(skuId);
+            log.info("购物车微服务 - 远程调用 - 根据skuId查询商品sku：{}", skuId);
+            ProductSku productSku = productFeignClient.getBySkuId(skuId);
 
             // 填充购物车相关信息
-            cartInfo.setUserId(1L);
+            cartInfo.setUserId(ThreadLocalUtil.getUser());
             cartInfo.setSkuId(skuId);
             cartInfo.setSkuNum(skuNum);
             cartInfo.setCartPrice(productSku.getSalePrice());
@@ -196,6 +202,31 @@ public class CartServiceImpl implements CartService {
         // 根据key删除所有商品
         log.info("购物车微服务 - 根据key删除所有商品：{}", cartKey);
         redisTemplate.delete(cartKey);
+    }
+
+    @Override
+    public List<CartInfo> getChecked() {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key获取所有商品
+        log.info("购物车微服务 - 根据key获取所有商品：{}", cartKey);
+        List<Object> values = redisTemplate.opsForHash().values(cartKey);
+
+        // 购物车选中的商品列表
+        List<CartInfo> cartInfoList = new ArrayList<>();
+        for (Object value : values) {
+            CartInfo cartInfo = JSON.parseObject(value.toString(), CartInfo.class);
+            if (cartInfo.getIsChecked() == 1) {
+                cartInfoList.add(cartInfo);
+            }
+        }
+
+        // 按照创建时间排序
+        cartInfoList.sort(Comparator.comparing(BaseEntity::getCreateTime));
+
+        // 返回结果
+        return cartInfoList;
     }
 
 }

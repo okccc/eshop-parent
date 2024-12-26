@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: okccc
  * @Date: 2024/5/27 15:53:23
- * @Desc:
+ * @Desc: 购物车都是临时数据,为了提高读写性能,选择Redis的Hash结构存储
  */
 @Tag(name = "h5购物车接口")
 @RestController
@@ -30,7 +30,7 @@ public class CartController {
         return Result.ok();
     }
 
-    @Operation(summary = "查询购物车列表")
+    @Operation(summary = "获取购物车列表")
     @GetMapping(value = "/auth/cartList")
     public Result<List<CartInfo>> getCartList() {
         List<CartInfo> list = cartService.list();
@@ -63,5 +63,13 @@ public class CartController {
     public Result removeAll() {
         cartService.removeAll();
         return Result.ok();
+    }
+
+    @Operation(summary = "获取购物车选中的商品列表")
+    @GetMapping(value = "/auth/getAllCkecked")
+//    @GetMapping(value = "/auth/getAllChecked")
+    public List<CartInfo> getChecked() {
+        // 远程调用：订单结算时需要获取购物车选中的商品列表,不是前端请求所以不需要返回Result
+        return cartService.getChecked();
     }
 }

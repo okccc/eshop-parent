@@ -28,4 +28,7 @@ public interface CartService {
 
     // 删除所有商品(清空购物车)
     void removeAll();
+
+    // 获取购物车选中的商品列表
+    List<CartInfo> getChecked();
 }
