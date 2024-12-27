@@ -31,4 +31,8 @@ public interface CartService {
 
     // 获取购物车选中的商品列表
     List<CartInfo> getChecked();
+
+    // 删除已生成订单的购物车商品
+    void removeChecked();
+
 }

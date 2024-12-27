@@ -229,4 +229,23 @@ public class CartServiceImpl implements CartService {
         return cartInfoList;
     }
 
+    @Override
+    public void removeChecked() {
+        // 获取购物车的key
+        String cartKey = getCartKey();
+
+        // 根据key获取所有商品
+        log.info("购物车微服务 - 根据key获取所有商品：{}", cartKey);
+        List<Object> values = redisTemplate.opsForHash().values(cartKey);
+
+        // 删除选中商品
+        for (Object value : values) {
+            CartInfo cartInfo = JSON.parseObject(value.toString(), CartInfo.class);
+            if (cartInfo.getIsChecked() == 1) {
+                log.info("购物车微服务 - 根据key和field删除选中商品：{},{}", cartKey, cartInfo.getSkuId());
+                redisTemplate.opsForHash().delete(cartKey, String.valueOf(cartInfo.getSkuId()));
+            }
+        }
+    }
+
 }

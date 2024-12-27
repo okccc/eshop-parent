@@ -66,10 +66,17 @@ public class CartController {
     }
 
     @Operation(summary = "获取购物车选中的商品列表")
-    @GetMapping(value = "/auth/getAllCkecked")
-//    @GetMapping(value = "/auth/getAllChecked")
+    @GetMapping(value = "/auth/getAllChecked")
     public List<CartInfo> getChecked() {
         // 远程调用：订单结算时需要获取购物车选中的商品列表,不是前端请求所以不需要返回Result
         return cartService.getChecked();
     }
+
+    @Operation(summary = "删除购物车已生成订单的商品")
+    @GetMapping(value = "/auth/deleteChecked")
+    public void removeChecked() {
+        // 远程调用：订单结算时需要删除已生成订单的购物车商品,不是前端请求所以不需要返回Result
+        cartService.removeChecked();
+    }
+
 }
