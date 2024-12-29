@@ -1,6 +1,7 @@
 package com.okccc.eshop.order.controller;
 
 import com.okccc.eshop.common.result.Result;
+import com.okccc.eshop.model.dto.h5.OrderInfoDto;
 import com.okccc.eshop.model.vo.h5.TradeVo;
 import com.okccc.eshop.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,5 +28,13 @@ public class OrderController {
         // 点击去结算按钮会跳转到创建订单页面,需要干两件事：1.获取用户地址列表选中默认地址 2.获取购物车选中商品列表并计算总金额
         TradeVo tradeVo = orderService.createOrder();
         return Result.ok(tradeVo);
+    }
+
+    @Operation(summary = "提交订单")
+    @PostMapping("/auth/submitOrder")
+    public Result<Long> submitOrder(@RequestBody OrderInfoDto orderInfoDto) {
+        // 提交订单需要干两件事：1.保存订单信息 2.保存订单明细信息
+        Long orderId = orderService.submitOrder(orderInfoDto);
+        return Result.ok(orderId);
     }
 }

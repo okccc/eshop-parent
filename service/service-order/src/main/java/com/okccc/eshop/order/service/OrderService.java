@@ -1,5 +1,6 @@
 package com.okccc.eshop.order.service;
 
+import com.okccc.eshop.model.dto.h5.OrderInfoDto;
 import com.okccc.eshop.model.vo.h5.TradeVo;
 
 /**
@@ -11,4 +12,7 @@ public interface OrderService {
 
     // 创建订单
     TradeVo createOrder();
+
+    // 提交订单
+    Long submitOrder(OrderInfoDto orderInfoDto);
 }

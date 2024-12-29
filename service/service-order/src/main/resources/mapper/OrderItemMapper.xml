@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.order.mapper.OrderItemMapper">
+
+    <!-- void insert(OrderItem orderItem); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into order_item (order_id, sku_id, sku_name, thumb_img, sku_price, sku_num)
+        values ( #{orderId}, #{skuId}, #{skuName}, #{thumbImg}, #{skuPrice}, #{skuNum})
+    </insert>
+</mapper>
