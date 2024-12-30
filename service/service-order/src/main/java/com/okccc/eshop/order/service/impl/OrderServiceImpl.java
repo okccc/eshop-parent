@@ -151,4 +151,10 @@ public class OrderServiceImpl implements OrderService {
         // 5.返回订单id
         return orderInfo.getId();
     }
+
+    @Override
+    public OrderInfo getById(Long id) {
+        log.info("订单微服务 - 根据id查询订单：{}", id);
+        return orderInfoMapper.selectById(id);
+    }
 }

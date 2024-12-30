@@ -58,4 +58,9 @@
         #{cancelReason}
         )
     </insert>
+
+    <!-- OrderInfo selectById(Long id); -->
+    <select id="selectById" resultType="com.okccc.eshop.model.entity.order.OrderInfo">
+        select * from order_info where id = #{id}
+    </select>
 </mapper>

@@ -13,4 +13,7 @@ public interface OrderInfoMapper {
 
     // 新增订单
     void insert(OrderInfo orderInfo);
+
+    // 根据id查询订单
+    OrderInfo selectById(Long id);
 }
