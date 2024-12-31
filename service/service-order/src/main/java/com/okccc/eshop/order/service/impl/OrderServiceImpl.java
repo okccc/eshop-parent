@@ -157,4 +157,27 @@ public class OrderServiceImpl implements OrderService {
         log.info("订单微服务 - 根据id查询订单：{}", id);
         return orderInfoMapper.selectById(id);
     }
+
+    @Override
+    public TradeVo buy(Long skuId) {
+        // 1.远程调用：根据skuId查询商品sku信息
+        log.info("订单微服务 - 远程调用 - 根据skuId查询商品sku：{}", skuId);
+        ProductSku productSku = productFeignClient.getBySkuId(skuId);
+
+        // 2.订单明细(结算商品)列表
+        List<OrderItem> orderItemList = new ArrayList<>();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setSkuId(skuId);
+        orderItem.setSkuName(productSku.getSkuName());
+        orderItem.setSkuNum(1);
+        orderItem.setSkuPrice(productSku.getSalePrice());
+        orderItem.setThumbImg(productSku.getThumbImg());
+        orderItemList.add(orderItem);
+
+        // 3.封装响应结果
+        TradeVo tradeVo = new TradeVo();
+        tradeVo.setOrderItemList(orderItemList);
+        tradeVo.setTotalAmount(productSku.getSalePrice());
+        return tradeVo;
+    }
 }

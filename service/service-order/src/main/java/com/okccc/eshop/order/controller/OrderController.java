@@ -39,11 +39,19 @@ public class OrderController {
         return Result.ok(orderId);
     }
 
-    @Operation(summary = "根据id查询订单")
+    @Operation(summary = "根据id获取订单信息")
     @GetMapping(value = "/auth/{id}")
     public Result<OrderInfo> getById(@PathVariable("id") Long id) {
         // 点击提交订单按钮会跳转到确认支付页面,需要根据id获取订单信息,展示订单支付信息
         OrderInfo orderInfo = orderService.getById(id);
         return Result.ok(orderInfo);
+    }
+
+    @Operation(summary = "立即购买")
+    @GetMapping(value = "/auth/buy/{skuId}")
+    public Result<TradeVo> buy(@PathVariable("skuId") Long skuId) {
+        // 商品详情页可以直接下单,不经过购物车
+        TradeVo tradeVo = orderService.buy(skuId);
+        return Result.ok(tradeVo);
     }
 }

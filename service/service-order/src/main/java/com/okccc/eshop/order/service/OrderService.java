@@ -19,4 +19,7 @@ public interface OrderService {
 
     // 根据id查询订单
     OrderInfo getById(Long id);
+
+    // 立即购买
+    TradeVo buy(Long skuId);
 }
