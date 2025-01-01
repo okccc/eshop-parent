@@ -1,5 +1,6 @@
 package com.okccc.eshop.order.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.common.result.Result;
 import com.okccc.eshop.model.dto.h5.OrderInfoDto;
 import com.okccc.eshop.model.entity.order.OrderInfo;
@@ -39,7 +40,7 @@ public class OrderController {
         return Result.ok(orderId);
     }
 
-    @Operation(summary = "根据id获取订单信息")
+    @Operation(summary = "根据id查询订单")
     @GetMapping(value = "/auth/{id}")
     public Result<OrderInfo> getById(@PathVariable("id") Long id) {
         // 点击提交订单按钮会跳转到确认支付页面,需要根据id获取订单信息,展示订单支付信息
@@ -53,5 +54,13 @@ public class OrderController {
         // 商品详情页可以直接下单,不经过购物车
         TradeVo tradeVo = orderService.buy(skuId);
         return Result.ok(tradeVo);
+    }
+
+    @Operation(summary = "查询所有订单")
+    @GetMapping(value = "/auth/{pageNum}/{pageSize}")
+    public Result<PageInfo<OrderInfo>> page(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize, Integer orderStatus) {
+        // 分页查询订单列表
+        PageInfo<OrderInfo> pageResult = orderService.page(pageNum, pageSize, orderStatus);
+        return Result.ok(pageResult);
     }
 }

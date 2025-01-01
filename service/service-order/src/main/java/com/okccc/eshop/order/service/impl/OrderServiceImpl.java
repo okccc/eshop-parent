@@ -1,5 +1,7 @@
 package com.okccc.eshop.order.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.client.feign.CartFeignClient;
 import com.okccc.eshop.client.feign.ProductFeignClient;
 import com.okccc.eshop.client.feign.UserFeignClient;
@@ -179,5 +181,26 @@ public class OrderServiceImpl implements OrderService {
         tradeVo.setOrderItemList(orderItemList);
         tradeVo.setTotalAmount(productSku.getSalePrice());
         return tradeVo;
+    }
+
+    @Override
+    public PageInfo<OrderInfo> page(Integer pageNum, Integer pageSize, Integer orderStatus) {
+        // 1.设置分页参数
+        PageHelper.startPage(pageNum, pageSize);
+
+        // 2.分页查询
+        Long userId = ThreadLocalUtil.getUser();
+        // 根据userId和orderStatus查询订单
+        log.info("订单微服务 - 根据用户id和订单状态查询订单列表：{},{}", userId, orderStatus);
+        List<OrderInfo> orderInfoList = orderInfoMapper.selectListByUserId(userId, orderStatus);
+        orderInfoList.forEach(orderInfo -> {
+            // 根据orderId查询订单明细
+            log.info("订单微服务 - 根据订单id查询订单明细列表：{}", orderInfo.getId());
+            List<OrderItem> orderItemList = orderItemMapper.selectListByOrderId(orderInfo.getId());
+            orderInfo.setOrderItemList(orderItemList);
+        });
+
+        // 3.封装PageInfo对象
+        return new PageInfo<>(orderInfoList);
     }
 }

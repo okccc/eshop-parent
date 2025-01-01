@@ -63,4 +63,20 @@
     <select id="selectById" resultType="com.okccc.eshop.model.entity.order.OrderInfo">
         select * from order_info where id = #{id}
     </select>
+
+    <!-- List<OrderInfo> selectListByUserId(Long userId, Integer orderStatus); -->
+    <select id="selectListByUserId" resultType="com.okccc.eshop.model.entity.order.OrderInfo">
+        select *
+        from order_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+    </select>
 </mapper>

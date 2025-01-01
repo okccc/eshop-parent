@@ -1,5 +1,6 @@
 package com.okccc.eshop.order.service;
 
+import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.model.dto.h5.OrderInfoDto;
 import com.okccc.eshop.model.entity.order.OrderInfo;
 import com.okccc.eshop.model.vo.h5.TradeVo;
@@ -22,4 +23,7 @@ public interface OrderService {
 
     // 立即购买
     TradeVo buy(Long skuId);
+
+    // 分页查询订单
+    PageInfo<OrderInfo> page(Integer pageNum, Integer pageSize, Integer orderStatus);
 }
