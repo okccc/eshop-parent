@@ -79,4 +79,9 @@
         </where>
         order by id desc
     </select>
+
+    <!-- OrderInfo selectByOrderNo(String orderNo); -->
+    <select id="selectByOrderNo" resultType="com.okccc.eshop.model.entity.order.OrderInfo">
+        select * from order_info where order_no = #{orderNo}
+    </select>
 </mapper>

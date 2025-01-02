@@ -26,4 +26,7 @@ public interface OrderService {
 
     // 分页查询订单
     PageInfo<OrderInfo> page(Integer pageNum, Integer pageSize, Integer orderStatus);
+
+    // 根据orderNo查询订单信息
+    OrderInfo getByOrderNo(String orderNo);
 }

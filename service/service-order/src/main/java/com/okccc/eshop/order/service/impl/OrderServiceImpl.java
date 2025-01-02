@@ -203,4 +203,21 @@ public class OrderServiceImpl implements OrderService {
         // 3.封装PageInfo对象
         return new PageInfo<>(orderInfoList);
     }
+
+    @Override
+    public OrderInfo getByOrderNo(String orderNo) {
+        // 1.根据orderNo查询订单
+        log.info("订单微服务 - 根据orderNo查询订单：{}", orderNo);
+        OrderInfo orderInfo = orderInfoMapper.selectByOrderNo(orderNo);
+
+        // 2.根据orderId查询订单明细
+        log.info("订单微服务 - 根据orderId查询订单明细列表：{}", orderInfo.getId());
+        List<OrderItem> orderItemList = orderItemMapper.selectListByOrderId(orderInfo.getId());
+
+        // 3.将订单明细添加到订单
+        orderInfo.setOrderItemList(orderItemList);
+
+        // 4.返回结果
+        return orderInfo;
+    }
 }

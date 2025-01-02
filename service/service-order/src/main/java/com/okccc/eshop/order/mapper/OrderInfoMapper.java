@@ -21,4 +21,7 @@ public interface OrderInfoMapper {
 
     // 根据userId和orderStatus查询订单
     List<OrderInfo> selectListByUserId(Long userId, Integer orderStatus);
+
+    // 根据orderNo查询订单
+    OrderInfo selectByOrderNo(String orderNo);
 }

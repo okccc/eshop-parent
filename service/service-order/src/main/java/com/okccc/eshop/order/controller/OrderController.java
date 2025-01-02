@@ -63,4 +63,11 @@ public class OrderController {
         PageInfo<OrderInfo> pageResult = orderService.page(pageNum, pageSize, orderStatus);
         return Result.ok(pageResult);
     }
+
+    @Operation(summary = "根据orderNo查询订单")
+    @GetMapping(value = "/auth/getOrderInfoByOrderNo/{orderNo}")
+    public OrderInfo getByOrderNo(@PathVariable("orderNo") String orderNo) {
+        // 远程调用：订单支付时需要根据orderNo获取订单信息,不是前端请求所以不需要返回Result
+        return orderService.getByOrderNo(orderNo);
+    }
 }
