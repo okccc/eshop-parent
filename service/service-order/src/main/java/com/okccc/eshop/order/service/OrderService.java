@@ -29,4 +29,7 @@ public interface OrderService {
 
     // 根据orderNo查询订单信息
     OrderInfo getByOrderNo(String orderNo);
+
+    // 更新订单状态
+    void updateOrderStatus(String orderNo, Integer orderStatus);
 }

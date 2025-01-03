@@ -70,4 +70,11 @@ public class OrderController {
         // 远程调用：订单支付时需要根据orderNo获取订单信息,不是前端请求所以不需要返回Result
         return orderService.getByOrderNo(orderNo);
     }
+
+    @Operation(summary = "更新订单状态")
+    @GetMapping(value = "/auth/updateOrderStatusPayed/{orderNo}/{orderStatus}")
+    public void updateOrderStatus(@PathVariable(value = "orderNo") String orderNo, @PathVariable(value = "orderStatus") Integer orderStatus) {
+        // 远程调用：支付完成时需要更新订单状态,不是前端请求所以不需要返回Result
+        orderService.updateOrderStatus(orderNo, orderStatus);
+    }
 }

@@ -21,9 +21,11 @@ import com.okccc.eshop.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -219,5 +221,18 @@ public class OrderServiceImpl implements OrderService {
 
         // 4.返回结果
         return orderInfo;
+    }
+
+    @Transactional
+    @Override
+    public void updateOrderStatus(String orderNo, Integer orderStatus) {
+        // 更新订单状态
+        log.info("订单微服务 - 根据订单id查询订单：{}", orderNo);
+        OrderInfo orderInfo = orderInfoMapper.selectByOrderNo(orderNo);
+        orderInfo.setOrderStatus(orderStatus);
+        orderInfo.setPayType(2);
+        orderInfo.setPaymentTime(new Date());
+        log.info("订单微服务 - 根据订单id修改订单：{}", orderNo);
+        orderInfoMapper.updateById(orderInfo);
     }
 }

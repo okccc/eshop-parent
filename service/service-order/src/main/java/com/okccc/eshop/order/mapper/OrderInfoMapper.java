@@ -24,4 +24,7 @@ public interface OrderInfoMapper {
 
     // 根据orderNo查询订单
     OrderInfo selectByOrderNo(String orderNo);
+
+    // 更新订单状态
+    void updateById(OrderInfo orderInfo);
 }
