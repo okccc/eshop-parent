@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件负责写crud -->
+<mapper namespace="com.okccc.eshop.pay.mapper.PaymentInfoMapper">
+
+    <!-- PaymentInfo selectByOrderNo(String orderNo); -->
+    <select id="selectByOrderNo" resultType="com.okccc.eshop.model.entity.pay.PaymentInfo">
+        select * from payment_info where order_no = #{orderNo}
+    </select>
+
+    <!-- void insert(PaymentInfo paymentInfo); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into payment_info (user_id, order_no, pay_type, out_trade_no, amount, content, payment_status, callback_time, callback_content)
+        values ( #{userId}, #{orderNo}, #{payType}, #{outTradeNo}, #{amount}, #{content}, #{paymentStatus}, #{callbackTime}, #{callbackContent})
+    </insert>
+</mapper>
