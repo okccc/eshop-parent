@@ -16,4 +16,7 @@ public interface PaymentInfoMapper {
 
     // 新增支付
     void insert(PaymentInfo paymentInfo);
+
+    // 更新支付状态
+    void updatePaymentInfo(PaymentInfo paymentInfo);
 }
