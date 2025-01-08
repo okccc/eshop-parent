@@ -3,6 +3,7 @@ package com.okccc.eshop.product.mapper;
 import com.okccc.eshop.model.dto.h5.ProductSkuDto;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface ProductSkuMapper {
 
     // 根据productId查询商品sku
     List<ProductSku> selectByProductId(Long productId);
+
+    // 根据id更新商品销量和库存
+    void updateById(@Param("id") Long id, @Param("num") Integer num);
 }

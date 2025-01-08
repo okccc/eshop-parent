@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.model.dto.h5.ProductSkuDto;
+import com.okccc.eshop.model.dto.product.SkuSaleDto;
 import com.okccc.eshop.model.entity.product.Product;
 import com.okccc.eshop.model.entity.product.ProductDetail;
 import com.okccc.eshop.model.entity.product.ProductSku;
@@ -15,6 +16,7 @@ import com.okccc.eshop.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -100,5 +102,17 @@ public class ProductServiceImpl implements ProductService {
     public ProductSku getBySkuId(Long skuId) {
         log.info("商品sku管理 - 根据id查询商品sku：{}", skuId);
         return productSkuMapper.selectById(skuId);
+    }
+
+    @Override
+    public Boolean updateSkuSaleAndStock(List<SkuSaleDto> skuSaleDtoList) {
+        if (!ObjectUtils.isEmpty(skuSaleDtoList)) {
+            for(SkuSaleDto skuSaleDto : skuSaleDtoList) {
+                // 更新商品销量和库存
+                log.info("商品sku管理 - 根据id更新商品销量和库存：{}", skuSaleDto.getSkuId());
+                productSkuMapper.updateById(skuSaleDto.getSkuId(), skuSaleDto.getNum());
+            }
+        }
+        return true;
     }
 }

@@ -2,6 +2,7 @@ package com.okccc.eshop.product.service;
 
 import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.model.dto.h5.ProductSkuDto;
+import com.okccc.eshop.model.dto.product.SkuSaleDto;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import com.okccc.eshop.model.vo.h5.ProductItemVo;
 
@@ -25,4 +26,7 @@ public interface ProductService {
 
     // 查询商品sku信息
     ProductSku getBySkuId(Long skuId);
+
+    // 更新商品销量和库存
+    Boolean updateSkuSaleAndStock(List<SkuSaleDto> skuSaleDtoList);
 }

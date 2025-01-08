@@ -3,6 +3,7 @@ package com.okccc.eshop.product.controller;
 import com.github.pagehelper.PageInfo;
 import com.okccc.eshop.common.result.Result;
 import com.okccc.eshop.model.dto.h5.ProductSkuDto;
+import com.okccc.eshop.model.dto.product.SkuSaleDto;
 import com.okccc.eshop.model.entity.product.ProductSku;
 import com.okccc.eshop.model.vo.h5.ProductItemVo;
 import com.okccc.eshop.product.service.ProductService;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: okccc
@@ -45,5 +48,12 @@ public class ProductController {
     public ProductSku getBySkuId(@PathVariable("skuId") Long skuId) {
         // 远程调用：购物车模块需要根据skuId查询sku信息,不是前端请求所以不需要返回Result
         return productService.getBySkuId(skuId);
+    }
+
+    @Operation(summary = "更新商品销量和库存")
+    @PostMapping(value = "/updateSkuSaleNum")
+    public Boolean updateSkuSaleNum(@RequestBody List<SkuSaleDto> skuSaleDtoList) {
+        // 远程调用：支付成功需要更新商品销量和库存,不是前端请求所以不需要返回Result
+        return productService.updateSkuSaleAndStock(skuSaleDtoList);
     }
 }

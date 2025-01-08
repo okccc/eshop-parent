@@ -57,4 +57,9 @@
     <select id="selectByProductId" resultType="com.okccc.eshop.model.entity.product.ProductSku">
         select * from product_sku where product_id = #{productId}
     </select>
+
+    <!-- void updateById(@Param("id") Long id, @Param("num") Integer num); -->
+    <update id="updateById">
+        update product_sku set sale_num = sale_num + #{num}, stock_num = stock_num - #{num} where id = #{id}
+    </update>
 </mapper>
