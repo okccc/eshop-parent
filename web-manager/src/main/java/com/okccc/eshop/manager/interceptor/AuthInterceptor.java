@@ -20,6 +20,9 @@ import java.io.PrintWriter;
  * @Author: okccc
  * @Date: 2024/4/24 14:34:18
  * @Desc: 除了登录和获取验证码不需要做登录校验,其它后端接口必须在用户登录成功以后才能访问
+ *
+ * 问题：添加登录校验拦截器后,接口文档就没法测试了,全部显示用户未登录
+ * 解决：文档管理 - 全局参数设置 - 添加参数 - 手动添加token,输入login方法返回的token - 刷新页面
  */
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
