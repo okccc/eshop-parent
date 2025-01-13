@@ -25,7 +25,7 @@ public class SysRoleController {
 
     @Operation(summary = "分页查询角色")
     @GetMapping(value = "page")
-    public Result<PageResult<SysRole>> findByPage(Integer pageNum, Integer pageSize, SysRoleDto sysRoleDto) {
+    public Result<PageResult<SysRole>> page(Integer pageNum, Integer pageSize, SysRoleDto sysRoleDto) {
         // 分页查询,带搜索条件
         PageResult<SysRole> pageResult = sysRoleService.page(pageNum, pageSize, sysRoleDto);
         return Result.ok(pageResult);

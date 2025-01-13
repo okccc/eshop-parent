@@ -4,9 +4,10 @@ server:
 
 # spring
 spring:
-  # 服务名称
+  # 微服务名称,会在nacos的服务列表中显示
   application:
     name: service-cart
+  # 微服务配置
   cloud:
     # nacos
     nacos:

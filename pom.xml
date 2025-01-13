@@ -17,6 +17,7 @@
         <module>web-manager</module>
         <module>service-gateway</module>
         <module>service</module>
+        <module>service-client</module>
     </modules>
 
     <!-- 所有SpringBoot项目都继承该父项目,这里管理了大部分常用依赖的版本 -->

@@ -1,9 +1,10 @@
-# server
+# server配置(org.springframework.boot.autoconfigure.web.ServerProperties)
 server:
   port: 8501
 
 # spring配置
 spring:
+  # jackson配置(org.springframework.boot.autoconfigure.jackson.JacksonProperties)
   # Jackson转换数据时默认使用UTC时间,这样给前端返回的数据会和数据库差8小时,要和数据库时区保持一致
   # Asia/Shanghai=GMT+8,数据库url添加&serverTimeZone=Asia%2FShanghai或者&serverTimeZone=GMT%2B8
   jackson:
@@ -15,27 +16,28 @@ spring:
     url: jdbc:mysql://localhost:3306/eshop?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: Q-D37Sq*k61#yT_y
-    # hikari详细配置(com.zaxxer.hikari.HikariConfig)
+    # 连接池配置(com.zaxxer.hikari.HikariConfig)
     hikari:
       pool-name: HikariPool  # 连接池名称
-      connection-test-query: SELECT 1  # 自动检测连接
-      connection-timeout: 30000  # 连接超时时间,默认30s
-      maximum-pool-size: 10  # 最大连接数,默认10
       minimum-idle: 5  # 最小空闲连接数
-      max-lifetime: 0  # 连接最大存活时间,0不过期,默认30min
-      idle-timeout: 0  # 连接最大空闲时间,默认10min
-  # redis
+      maximum-pool-size: 20  # 池中最大连接数,默认10
+      connection-test-query: SELECT 1  # 自动检测连接
+      connection-timeout: 30000  # 连接超时时间,默认30秒
+      max-lifetime: 120000  # 连接最大存活时间,默认30分钟,0不过期
+      idle-timeout: 30000   # 连接最大空闲时间,默认10分钟,不能超过max-lifetime
+      leak-detection-threshold: 10000  # 泄露检测阈值,检测是否存在未释放的连接
+  # redis配置(org.springframework.boot.autoconfigure.data.redis.RedisProperties)
   data:
     redis:
       host: localhost
       port: 6379
 
-# mybatis配置
+# mybatis配置(org.mybatis.spring.boot.autoconfigure.MybatisProperties)
 mybatis:
   config-location: classpath:/mybatis-config.xml
   mapper-locations: classpath:/mapper/*.xml
 
-# knife4j配置
+# 文档配置(org.springdoc.core.properties.SpringDocConfigProperties)
 springdoc:
   # 接口文档中类似queryVo={"provinceId":"1","cityId":"1"}这种参数不方便调试,可以将其扁平化
   default-flat-param-object: true

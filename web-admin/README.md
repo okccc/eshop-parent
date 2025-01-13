@@ -1,5 +1,6 @@
 ## 项目准备
 ```shell
+# 项目开发步骤：创建module - 修改pom.xml - 编写application.yml - 启动类 - 开发业务接口
 # 接口就是一个Http请求,规定了请求方式、请求路径、请求参数、响应结果,前后端分离项目数据传输格式是JSON
 # 快速生成接口的测试类：先导入test启动器 - 选中UserMapper - 右键 - Go To - Test
 # 开发可以使用swagger接口文档自测,实现登录功能之后就可以和前端页面联调
