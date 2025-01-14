@@ -61,6 +61,12 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
+        <!-- easy-captcha -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+        </dependency>
+
         <!-- jjwt(java-jwt)登录认证 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

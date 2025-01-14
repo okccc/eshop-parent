@@ -12,6 +12,8 @@ import com.okccc.eshop.model.dto.system.LoginDto;
 import com.okccc.eshop.model.entity.system.SysUser;
 import com.okccc.eshop.model.vo.system.CaptchaVo;
 import com.okccc.eshop.model.vo.system.LoginVo;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,12 +42,21 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public CaptchaVo getCaptcha() {
-        // 1.使用hutool工具类生成图片验证码(速度比easy-captcha快)
-        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(130, 48, 4, 2);
+//        // 1.使用hutool工具类生成图片验证码(速度比easy-captcha快)
+//        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(130, 48, 4, 2);
+//        // 获取验证码中的字符串
+//        String codeValue = captcha.getCode();
+//        // 将图片验证码转换成base64编码的字符串
+//        String codeImage = "data:image/png;base64," + captcha.getImageBase64();
+
+        // 1.使用easy-captcha生成图片验证码
+        SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 4);
+        // 设置验证码文本类型
+        specCaptcha.setCharType(Captcha.TYPE_DEFAULT);
         // 获取验证码中的字符串
-        String codeValue = captcha.getCode();
+        String codeValue = specCaptcha.text();
         // 将图片验证码转换成base64编码的字符串
-        String codeImage = "data:image/png;base64," + captcha.getImageBase64();
+        String codeImage = specCaptcha.toBase64();
 
         // 2.将验证码字符串存入redis,有效期1分钟
         // redis中key的命名规范通常是"项目名:功能名:uuid",为了方便统一管理将字符串常量放到Constant类
