@@ -2,6 +2,7 @@ package com.okccc.eshop.admin.model.entity.base;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -35,6 +36,13 @@ import java.util.Date;
  * alter table t_user add version int default 1;
  * 乐观锁版本号,解决并发场景修改数据的安全问题,针对updateById(id)和update(entity,wrapper)
  * 乐观锁和悲观锁是并发编程中处理并发访问和资源竞争的两种不同的锁机制
+ *
+ * 5.@TableLogic
+ * alter table t_user add is_deleted int default 0;
+ * 逻辑删除,默认0表示未删除,执行删除操作时会将该属性修改为1,查询操作只查is_deleted=0的数据
+ * 添加逻辑删除前是DELETE操作 ==> Preparing: DELETE FROM t_user WHERE id=?
+ * 添加逻辑删除后是UPDATE操作 ==> Preparing: UPDATE t_user SET is_deleted=1 WHERE id=? AND is_deleted=0
+ * 逻辑删除只对Mybatis-Plus自动生成的sql有效,在Mapper.xml手动编写sql时需要添加过滤条件is_deleted=0
  */
 @Schema(description = "公共属性基类")
 @Data
@@ -53,5 +61,6 @@ public class BaseEntity implements Serializable {
     private Date updateTime;
 
     @Schema(description = "逻辑删除")
+    @TableLogic
     private Integer isDeleted;
 }
