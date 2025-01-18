@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -43,6 +44,10 @@ import java.util.Date;
  * 添加逻辑删除前是DELETE操作 ==> Preparing: DELETE FROM t_user WHERE id=?
  * 添加逻辑删除后是UPDATE操作 ==> Preparing: UPDATE t_user SET is_deleted=1 WHERE id=? AND is_deleted=0
  * 逻辑删除只对Mybatis-Plus自动生成的sql有效,在Mapper.xml手动编写sql时需要添加过滤条件is_deleted=0
+ *
+ * 6.@JsonIgnore
+ * 给实体类属性添加com.fasterxml.jackson.annotation.JsonIgnore注解,前后端交互时就会忽略该字段
+ * SpringBoot默认使用Jackson序列化器,@RequestBody将前端传入的JSON反序列化成Java对象,@ResponseBody将后端响应的Java对象序列化成JSON
  */
 @Schema(description = "公共属性基类")
 @Data
@@ -53,14 +58,17 @@ public class BaseEntity implements Serializable {
     private Long id;
 
     @Schema(description = "创建时间")
+    @JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @Schema(description = "修改时间")
+    @JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     @Schema(description = "逻辑删除")
+    @JsonIgnore
     @TableLogic
     private Integer isDeleted;
 }
