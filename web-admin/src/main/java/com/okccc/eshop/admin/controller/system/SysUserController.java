@@ -1,7 +1,16 @@
 package com.okccc.eshop.admin.controller.system;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.okccc.eshop.admin.service.SysUserService;
+import com.okccc.eshop.admin.result.Result;
+import com.okccc.eshop.admin.model.dto.system.SysUserDto;
+import com.okccc.eshop.admin.model.entity.system.SysUser;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,5 +35,27 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/admin/system/sysUser")
 public class SysUserController {
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    // 传入实体类参数时要注意前端的请求方式,GET请求没有请求体,POST请求才有请求体,要给参数添加@RequestBody注解
+    @Operation(summary = "分页查询用户")
+    @GetMapping(value = "page")
+    public Result<Page<SysUser>> page(Integer current, Integer size, SysUserDto sysUserDto) {
+        // 1.创建分页对象,主要包含records、total、current、size
+        Page<SysUser> page = new Page<>(current, size);
+
+        // 2.拼接查询条件,要先判空不然查不到数据
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(SysUser::getUsername, sysUserDto.getKeyword());
+        queryWrapper.gt(StringUtils.hasText(sysUserDto.getCreateTimeBegin()), SysUser::getCreateTime, sysUserDto.getCreateTimeBegin());
+        queryWrapper.lt(StringUtils.hasText(sysUserDto.getCreateTimeEnd()), SysUser::getCreateTime, sysUserDto.getCreateTimeEnd());
+
+        // 3.单表分页查询
+        log.info("用户管理 - 分页查询用户");
+        Page<SysUser> sysUserPage = sysUserService.page(page, queryWrapper);
+        return Result.ok(sysUserPage);
+    }
 
 }
