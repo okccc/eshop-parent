@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,36 @@ public class SysUserController {
         log.info("用户管理 - 分页查询用户");
         Page<SysUser> sysUserPage = sysUserService.page(page, queryWrapper);
         return Result.ok(sysUserPage);
+    }
+
+    @Operation(summary = "根据id查询用户")
+    @GetMapping(value = "{id}")
+    public Result<SysUser> getById(@PathVariable("id") Long id) {
+        log.info("用户管理 - 根据id查询用户：{}", id);
+        SysUser sysUser = sysUserService.getById(id);
+        return Result.ok(sysUser);
+    }
+
+    @Operation(summary = "保存或更新用户")
+    @PostMapping
+    public Result<Boolean> saveOrUpdate(@RequestBody SysUser sysUser) {
+        // 前端输入的password是明文,要先加密
+        if (sysUser.getPassword() != null) {
+            sysUser.setPassword(DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes()));
+        }
+
+        // 保存或更新数据时要和前端沟通好请求参数,不包含主键id就是INSERT,包含主键id就是SELECT + UPDATE
+        log.info("用户管理 - 保存或更新用户：{}", sysUser);
+        boolean b = sysUserService.saveOrUpdate(sysUser);
+        return Result.ok(b);
+    }
+
+    @Operation(summary = "根据id删除用户")
+    @DeleteMapping(value = "{id}")
+    public Result<Boolean> removeById(@PathVariable("id") Long id) {
+        log.info("用户管理 - 根据id删除用户：{}", id);
+        boolean b = sysUserService.removeById(id);
+        return Result.ok(b);
     }
 
 }
