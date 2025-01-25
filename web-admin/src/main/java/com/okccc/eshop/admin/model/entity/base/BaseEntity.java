@@ -48,6 +48,13 @@ import java.util.Date;
  * 6.@JsonIgnore
  * 给实体类属性添加com.fasterxml.jackson.annotation.JsonIgnore注解,前后端交互时就会忽略该字段
  * SpringBoot默认使用Jackson序列化器,@RequestBody将前端传入的JSON反序列化成Java对象,@ResponseBody将后端响应的Java对象序列化成JSON
+ *
+ * 前端提交参数通常不包含createTime/updateTime/isDeleted,因此需要手动赋值,数据库中几乎每张表都有上述字段,挨个赋值显然很繁琐
+ * 方式1：数据库端实现,在mysql创建表时给这些字段设置默认值(推荐)
+ * `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+ * `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+ * `is_deleted` tinyint NOT NULL DEFAULT '0' COMMENT '删除标记'
+ * 方式2：后端实现,使用MybatisPlus的自动填充功能,自定义Handler实现MetaObjectHandler接口,然后给@TableField注解添加fill属性
  */
 @Schema(description = "公共属性基类")
 @Data
