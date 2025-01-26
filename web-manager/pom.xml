@@ -23,6 +23,14 @@
             <groupId>com.okccc</groupId>
             <artifactId>model</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <!-- mybatis-plus的默认配置会覆盖mybatis的配置,导致控制台日志不显示sql执行信息以及分页插件失效 -->
+                <!-- 所以纯mybatis实现的项目就不要导入mybatis-plus依赖 -->
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- web启动器 -->
