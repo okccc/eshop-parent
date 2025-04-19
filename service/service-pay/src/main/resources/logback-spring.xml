@@ -57,5 +57,5 @@
     </root>
 
     <!-- 设置局部日志级别 -->
-    <logger name="com.okccc.mapper" level="DEBUG"/>
+    <logger name="com.okccc.eshop.pay.mapper" level="DEBUG"/>
 </configuration>
